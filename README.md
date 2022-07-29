@@ -1,4 +1,4 @@
-# Full-Stack Starter
+# Congregate Meal Finder
 
 This repository contains a "starter" project for web application development in JavaScript. This includes the following components, from front-end to back-end:
 
