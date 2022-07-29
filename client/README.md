@@ -1,4 +1,4 @@
-# Welcome to our project
+# Hello, welcome to our project!
 
 # Getting Started with Create React App
 
