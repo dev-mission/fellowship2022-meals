@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      __siteId: {
+      SiteId: {
         type: Sequelize.INTEGER,
       },
-      __mealTypeId: {
+      MealTypeId: {
         type: Sequelize.INTEGER,
       },
       createdAt: {
