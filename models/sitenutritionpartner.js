@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   SiteNutritionPartner.init(
     {
-      __siteId: DataTypes.INTEGER,
-      __nutritionPartnerId: DataTypes.INTEGER,
+      SiteId: DataTypes.INTEGER,
+      NutritionPartnerId: DataTypes.INTEGER,
     },
     {
       sequelize,
