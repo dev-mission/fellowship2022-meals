@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   SitePopulation.init(
     {
-      __siteId: DataTypes.INTEGER,
-      __populationId: DataTypes.INTEGER,
+      SiteId: DataTypes.INTEGER,
+      PopulationId: DataTypes.INTEGER,
     },
     {
       sequelize,
