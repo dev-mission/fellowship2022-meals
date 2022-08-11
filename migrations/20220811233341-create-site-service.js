@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('SiteNutritionPartners', {
+    await queryInterface.createTable('SiteServices', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,7 +11,7 @@ module.exports = {
       SiteId: {
         type: Sequelize.INTEGER,
       },
-      NutritionPartnerId: {
+      ServiceId: {
         type: Sequelize.INTEGER,
       },
       createdAt: {
@@ -24,9 +24,9 @@ module.exports = {
       },
     });
     // set starting id to larger value so it doesn't conflict with test fixtures
-    await queryInterface.sequelize.query('ALTER SEQUENCE "SiteNutritionPartners_id_seq" RESTART WITH 100;');
+    await queryInterface.sequelize.query('ALTER SEQUENCE "SiteServices_id_seq" RESTART WITH 100;');
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SiteNutritionPartners');
+    await queryInterface.dropTable('SiteServices');
   },
 };
