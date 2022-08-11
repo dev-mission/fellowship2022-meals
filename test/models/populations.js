@@ -16,6 +16,6 @@ describe('models.SitePopulation', () => {
     await record.save();
     assert(record.id);
     test = await models.Population.findByPk(record.id);
-    console.log(test);
+    assert(test.name, 'youngsters');
   });
 });

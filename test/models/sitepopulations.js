@@ -17,7 +17,8 @@ describe('models.SitePopulation', () => {
     await record.save();
     assert(record.id);
     test = await models.SitePopulation.findByPk(record.id);
-    console.log(test);
+    assert(test.SiteId, 1);
+    assert(test.PopulationId);
   });
 
   // it('get all track records', async () => {

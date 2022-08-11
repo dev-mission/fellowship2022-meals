@@ -19,8 +19,11 @@ describe('/api/populations', () => {
     it('returns all population', async () => {
       const response = await testSession.get('/api/populations').expect(HttpStatus.OK);
       const result = response.body;
-      //   assert.deepStrictEqual(tracks.length, 2);
-      console.log(result);
+      assert.deepStrictEqual(result.length, 2);
+      assert.deepStrictEqual(result[0].id, 1);
+      assert.deepStrictEqual(result[0].name, 'Seniors');
+      assert.deepStrictEqual(result[1].id, 2);
+      assert.deepStrictEqual(result[1].name, 'Disabled');
     });
   });
 });

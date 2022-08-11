@@ -19,8 +19,7 @@ describe('/api/sitepopulations', () => {
     it('returns all sitepopulation', async () => {
       const response = await testSession.get('/api/sitepopulations').expect(HttpStatus.OK);
       const result = response.body;
-      //   assert.deepStrictEqual(tracks.length, 2);
-      console.log(result);
+      assert.deepStrictEqual(result.length, 3);
     });
   });
 });
