@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      __siteId: {
+      SiteId: {
         type: Sequelize.INTEGER,
       },
-      __mealTypeId: {
+      MealTypeId: {
         type: Sequelize.INTEGER,
       },
       createdAt: {
@@ -23,6 +23,8 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    // set starting id to larger value so it doesn't conflict with test fixtures
+    await queryInterface.sequelize.query('ALTER SEQUENCE "SiteMealTypes_id_seq" RESTART WITH 100;');
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('SiteMealTypes');

@@ -1,0 +1,16 @@
+[
+  {
+    "model": "Population",
+    "data": {
+      "id": 1,
+      "name": "Seniors"
+    }
+  },
+  {
+    "model": "Population",
+    "data": {
+      "id": 2,
+      "name": "Disabled"
+    }
+  }
+]

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Populations', {
+    await queryInterface.createTable('Services', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -21,9 +21,9 @@ module.exports = {
       },
     });
     // set starting id to larger value so it doesn't conflict with test fixtures
-    await queryInterface.sequelize.query('ALTER SEQUENCE "Populations_id_seq" RESTART WITH 100;');
+    await queryInterface.sequelize.query('ALTER SEQUENCE "Services_id_seq" RESTART WITH 100;');
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Populations');
+    await queryInterface.dropTable('Services');
   },
 };
