@@ -8,25 +8,25 @@ const helpers = require('../helpers');
 
 const router = express.Router();
 
-// Get all population
+// Get all connections between meal site and population
 router.get('/', async (req, res) => {
-  const allPopulation = await models.Population.findAll();
+  const allPopulation = await models.SitePopulation.findAll();
   res.json(allPopulation.map((r) => r.toJSON()));
 });
 
-// Get a population by id
-router.get('/:id', async (req, res) => {
-  const populations = await models.Population.findByPk(req.params.id);
-  if (populations) {
-    res.json(record.toJSON());
-  } else {
-    res.status(HttpStatus.NOT_FOUND).end();
-  }
+// Get all population that a meal site serves.
+router.get('/:siteId', async (req, res) => {
+  const populations = await models.SitePopulation.findAll({
+    where: {
+      SiteId: req.params.siteId,
+    },
+  });
+  res.json(populations.map((r) => r.toJSON()));
 });
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
-    const record = await models.Population.create(_.pick(req.body, ['name']));
+    const record = await models.SitePopulation.create(_.pick(req.body, ['SiteId', 'PopulationId']));
     res.status(HttpStatus.CREATED).json(record.toJSON());
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
@@ -44,9 +44,9 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Population.findByPk(req.params.id, { transaction });
+      record = await models.SitePopulation.findByPk(req.params.id, { transaction });
       if (record) {
-        await record.update(_.pick(req.body, ['name']), { transaction });
+        await record.update(_.pick(req.body, ['SiteId', 'PopulationId']), { transaction });
       }
     });
     if (record) {
@@ -70,7 +70,7 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Population.findByPk(req.params.id, { transaction });
+      record = await models.SitePopulation.findByPk(req.params.id, { transaction });
       if (record) {
         await record.destroy({ transaction });
       }
