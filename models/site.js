@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Site.belongsToMany(models.MealType, { through: models.SiteMealType });
       Site.belongsToMany(models.Population, { through: models.SitePopulation });
       Site.belongsToMany(models.CovidStatus, { through: models.SiteCovidStatus });
+      // Site.belongsToMany(models.Hours);
     }
   }
   Site.init(
