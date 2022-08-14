@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Site.belongsToMany(models.MealType, { through: models.SiteMealType });
+      Site.belongsToMany(models.Population, { through: models.SitePopulation });
+      Site.belongsToMany(models.CovidStatus, { through: models.SiteCovidStatus });
     }
   }
   Site.init(

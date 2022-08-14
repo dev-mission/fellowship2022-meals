@@ -9,11 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Hours.belongsTo(models.Site);
     }
   }
   Hours.init(
     {
-      SiteId: DataTypes.INTEGER,
+      // SiteId: DataTypes.INTEGER,
       day: DataTypes.INTEGER,
       open: DataTypes.TIME,
       close: DataTypes.TIME,

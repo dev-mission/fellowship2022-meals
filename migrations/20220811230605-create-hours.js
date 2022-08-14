@@ -10,6 +10,13 @@ module.exports = {
       },
       SiteId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'Sites',
+          },
+          key: 'id',
+        },
       },
       day: {
         type: Sequelize.INTEGER,
