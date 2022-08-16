@@ -22,6 +22,12 @@ const resetDatabase = async () => {
   // clear all test data (order matters due to foreign key relationships)
   await models.sequelize.query(`
     DELETE FROM "Users";
+    DELETE FROM "SitePopulations";
+    DELETE FROM "Populations";
+    DELETE FROM "MealTypes";
+    DELETE FROM "NutritionPartners";
+    DELETE FROM "SiteMealTypes";
+    DELETE FROM "SiteNutritionPartners"
   `);
 };
 
