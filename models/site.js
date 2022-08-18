@@ -17,10 +17,53 @@ module.exports = (sequelize, DataTypes) => {
   }
   Site.init(
     {
-      name: DataTypes.STRING,
-      address: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
-      email: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Site: name cannot be blank',
+          },
+          notEmpty: {
+            msg: 'Site: name cannot be blank',
+          },
+        },
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Site: address cannot be blank',
+          },
+          notEmpty: {
+            msg: 'Site: address cannot be blank',
+          },
+        },
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isValid(value) {
+            if (value.match(/^[0-9]{10}$/) == null) {
+              throw new Error('Invalid phone number, ten numbers only');
+            }
+          },
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Site: email cannot be blank',
+          },
+          notEmpty: {
+            msg: 'Site: email cannot be blank',
+          },
+        },
+      },
     },
     {
       sequelize,

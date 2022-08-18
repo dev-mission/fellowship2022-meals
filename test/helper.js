@@ -24,6 +24,8 @@ const resetDatabase = async () => {
     DELETE FROM "Users";
     DELETE FROM "SitePopulations";
     DELETE FROM "Populations";
+    DELETE FROM "Hours";
+    DELETE FROM "Sites";
   `);
 };
 
