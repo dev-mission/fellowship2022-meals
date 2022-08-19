@@ -1,0 +1,16 @@
+[
+  {
+    "model": "NutritionPartner",
+    "data": {
+      "id": 1,
+      "name": "Test name 1"
+    }
+  },
+  {
+    "model": "NutritionPartner",
+    "data": {
+      "id": 2,
+      "name": "Test name 2"
+    }
+  }
+]
