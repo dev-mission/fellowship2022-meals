@@ -1,0 +1,22 @@
+[
+  {
+    "model": "Site",
+    "data": {
+      "id": 1,
+      "name": "Dr. Davis Senior Center",
+      "address": "1753 Carroll Ave, San Francisco, CA 94124",
+      "phoneNumber": "6503217654",
+      "email": "davis@davis.org"
+    }
+  },
+  {
+    "model": "Site",
+    "data": {
+      "id": 2,
+      "name": "Kimochi Senior Center",
+      "address": "1840 Sutter Street, #101, San Francisco, CA 94115",
+      "phoneNumber": "4159312287",
+      "email": "kfukumitsu@kimochi-inc.org"
+    }
+  }
+]

@@ -9,12 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      SitePopulation.belongsTo(models.Site);
+      SitePopulation.belongsTo(models.Population);
     }
   }
   SitePopulation.init(
     {
-      SiteId: DataTypes.INTEGER,
-      PopulationId: DataTypes.INTEGER,
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
     },
     {
       sequelize,

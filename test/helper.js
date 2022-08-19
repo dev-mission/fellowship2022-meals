@@ -25,9 +25,11 @@ const resetDatabase = async () => {
     DELETE FROM "SitePopulations";
     DELETE FROM "SiteMealTypes";
     DELETE FROM "SiteNutritionPartners";
-    DELETE FROM "Populations";
+    DELETE FROM "Hours";
     DELETE FROM "MealTypes";
     DELETE FROM "NutritionPartners";
+    DELETE FROM "Populations";
+    DELETE FROM "Sites";
   `);
 };
 
