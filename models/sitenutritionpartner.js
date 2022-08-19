@@ -9,12 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      SiteNutritionPartner.belongsTo(models.Site);
+      SiteNutritionPartner.belongsTo(models.NutritionPartner);
     }
   }
   SiteNutritionPartner.init(
     {
-      SiteId: DataTypes.INTEGER,
-      NutritionPartnerId: DataTypes.INTEGER,
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
     },
     {
       sequelize,

@@ -9,10 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Site.belongsToMany(models.MealType, { through: models.SiteMealType });
-      Site.belongsToMany(models.Population, { through: models.SitePopulation });
       Site.belongsToMany(models.CovidStatus, { through: models.SiteCovidStatus });
-      // Site.belongsToMany(models.Hours);
+      Site.belongsToMany(models.MealType, { through: models.SiteMealType });
+      Site.belongsToMany(models.NutritionPartner, { through: models.SiteNutritionPartner });
+      Site.belongsToMany(models.Population, { through: models.SitePopulation });
+      Site.belongsToMany(models.Service, { through: models.SiteService });
+      Site.hasMany(models.Hours);
     }
   }
   Site.init(
