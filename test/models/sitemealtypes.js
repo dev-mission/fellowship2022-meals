@@ -8,6 +8,10 @@ const helper = require('../helper');
 const models = require('../../models');
 
 describe('models.SiteMealType', () => {
+  beforeEach(async () => {
+    await helper.loadFixtures(['sites', 'mealtypes']);
+  });
+
   it('creates a new record', async () => {
     let record = models.SiteMealType.build({
       SiteId: 1,
