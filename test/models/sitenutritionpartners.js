@@ -17,7 +17,7 @@ describe('models.SiteNutritionPartner', () => {
     await record.save();
     assert(record.id);
     test = await models.SiteNutritionPartner.findByPk(record.id);
-    assert.deepStrictEqual(item.SiteID, 1);
-    assert.deepStrictEqual(NutritionPartnerId, 1);
+    assert.deepStrictEqual(test.SiteId, 1);
+    assert.deepStrictEqual(test.NutritionPartnerId, 1);
   });
 });

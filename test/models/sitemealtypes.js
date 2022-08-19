@@ -11,14 +11,14 @@ describe('models.SiteMealType', () => {
   it('creates a new record', async () => {
     let record = models.SiteMealType.build({
       SiteId: 1,
-      MealTypeID: 1,
+      MealTypeId: 1,
     });
     assert.deepStrictEqual(record.id, null);
     await record.save();
     assert(record.id);
 
     test = await models.SiteMealType.findByPk(record.id);
-    assert.deepStrictEqual(item.SiteID, 1);
-    assert.deepStrictEqual(item.MealTypeID, 1);
+    assert.deepStrictEqual(test.SiteId, 1);
+    assert.deepStrictEqual(test.MealTypeId, 1);
   });
 });

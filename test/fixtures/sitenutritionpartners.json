@@ -1,6 +1,6 @@
 [
   {
-    "model": "User",
+    "model": "SiteNutritionPartner",
     "data": {
       "id": 1,
       "SiteId": 1,
@@ -8,7 +8,7 @@
     }
   },
   {
-    "model": "User",
+    "model": "SiteNutritionPartner",
     "data": {
       "id": 2,
       "SiteId": 2,

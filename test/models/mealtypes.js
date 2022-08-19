@@ -5,7 +5,7 @@ const models = require('../../models');
 
 describe('models.MealType', () => {
   beforeEach(async () => {
-    await helper.loadFixtures(['MealType']);
+    await helper.loadFixtures(['mealtypes']);
   });
 
   it('creates a new record record', async () => {
@@ -17,6 +17,6 @@ describe('models.MealType', () => {
     assert(record.id);
 
     test = await models.MealType.findByPk(record.id);
-    assert.deepStrictEqual(item.name, 'Chinese');
+    assert.deepStrictEqual(test.name, 'Chinese');
   });
 });
