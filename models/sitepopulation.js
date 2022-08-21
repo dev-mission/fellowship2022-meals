@@ -14,7 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   SitePopulation.init(
-    {},
+    {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+    },
     {
       sequelize,
       modelName: 'SitePopulation',
