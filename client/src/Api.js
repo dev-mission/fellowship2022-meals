@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { get, update } from 'lodash';
 
 const instance = axios.create({
   headers: {
@@ -53,6 +54,23 @@ const Api = {
     },
     update(id, data) {
       return instance.patch(`/api/users/${id}`, data);
+    },
+  },
+  sites: {
+    getall() {
+      return instance.get('/api/sites');
+    },
+    get(id) {
+      return instance.get(`/api/sites/${id}`);
+    },
+    create(data) {
+      return instance.post('/api/sites/', data);
+    },
+    update(id, data) {
+      return instance.patch(`/api/sites/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/sites${id}`);
     },
   },
 };

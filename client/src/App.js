@@ -9,6 +9,7 @@ import Login from './Login';
 import PasswordRoutes from './Passwords/PasswordRoutes';
 import Register from './Register';
 import UserRoutes from './Users/UserRoutes';
+import SitesForm from './Admin/SitesForm';
 
 function App() {
   return (
@@ -25,6 +26,22 @@ function App() {
             element={
               <AuthProtected>
                 <UserRoutes />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/sites/new"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <SitesForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/sites/:id/edit"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <SitesForm />
               </AuthProtected>
             }
           />
