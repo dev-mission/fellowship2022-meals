@@ -1,0 +1,18 @@
+[
+  {
+    "model": "SiteMealType",
+    "data": {
+      "id": 1,
+      "SiteId": 1,
+      "MealTypeId": 1
+    }
+  },
+  {
+    "model": "SiteMealType",
+    "data": {
+      "id": 2,
+      "SiteId": 2,
+      "MealTypeId": 2
+    }
+  }
+]

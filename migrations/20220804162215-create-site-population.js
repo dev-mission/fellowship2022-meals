@@ -10,9 +10,23 @@ module.exports = {
       },
       SiteId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'Sites',
+          },
+          key: 'id',
+        },
       },
       PopulationId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'Populations',
+          },
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
@@ -25,6 +39,11 @@ module.exports = {
     });
     // set starting id to larger value so it doesn't conflict with test fixtures
     await queryInterface.sequelize.query('ALTER SEQUENCE "SitePopulations_id_seq" RESTART WITH 100;');
+    // create a unique compound index to prevent duplicates
+    await queryInterface.addIndex('SitePopulations', {
+      fields: ['SiteId', 'PopulationId'],
+      unique: true,
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('SitePopulations');

@@ -8,25 +8,23 @@ const helpers = require('../helpers');
 
 const router = express.Router();
 
-// Get all connections between meal site and population
 router.get('/', async (req, res) => {
-  const allPopulation = await models.SitePopulation.findAll();
-  res.json(allPopulation.map((r) => r.toJSON()));
+  const allCovidStatuses = await models.CovidStatus.findAll();
+  res.json(allCovidStatuses.map((r) => r.toJSON()));
 });
 
-// Get all population that a meal site serves.
-router.get('/:siteId', async (req, res) => {
-  const populations = await models.SitePopulation.findAll({
-    where: {
-      SiteId: req.params.siteId,
-    },
-  });
-  res.json(populations.map((r) => r.toJSON()));
+router.get('/:id', async (req, res) => {
+  const CovidStatus = await models.CovidStatus.findByPk(req.params.id);
+  if (CovidStatus) {
+    res.json(CovidStatus.toJSON());
+  } else {
+    res.status(HttpStatus.NOT_FOUND).end();
+  }
 });
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
-    const record = await models.SitePopulation.create(_.pick(req.body, ['SiteId', 'PopulationId']));
+    const record = await models.CovidStatus.create(_.pick(req.body, ['name']));
     res.status(HttpStatus.CREATED).json(record.toJSON());
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
@@ -44,9 +42,9 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.SitePopulation.findByPk(req.params.id, { transaction });
+      record = await models.CovidStatus.findByPk(req.params.id, { transaction });
       if (record) {
-        await record.update(_.pick(req.body, ['SiteId', 'PopulationId']), { transaction });
+        await record.update(_.pick(req.body, ['name']), { transaction });
       }
     });
     if (record) {
@@ -70,7 +68,7 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.SitePopulation.findByPk(req.params.id, { transaction });
+      record = await models.CovidStatus.findByPk(req.params.id, { transaction });
       if (record) {
         await record.destroy({ transaction });
       }

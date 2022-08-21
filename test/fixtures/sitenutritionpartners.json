@@ -1,0 +1,18 @@
+[
+  {
+    "model": "SiteNutritionPartner",
+    "data": {
+      "id": 1,
+      "SiteId": 1,
+      "NutritionPartnerId": 1
+    }
+  },
+  {
+    "model": "SiteNutritionPartner",
+    "data": {
+      "id": 2,
+      "SiteId": 2,
+      "NutritionPartnerId": 2
+    }
+  }
+]

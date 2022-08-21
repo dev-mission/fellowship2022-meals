@@ -1,0 +1,16 @@
+[
+  {
+    "model": "MealType",
+    "data": {
+      "id": 1,
+      "name": "Chinese"
+    }
+  },
+  {
+    "model": "MealType",
+    "data": {
+      "id": 2,
+      "name": "Italian"
+    }
+  }
+]
