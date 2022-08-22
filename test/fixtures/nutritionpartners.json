@@ -3,14 +3,16 @@
     "model": "NutritionPartner",
     "data": {
       "id": 1,
-      "name": "Test name 1"
+      "name": "Test name 1",
+      "phoneNumber": "4121233214"
     }
   },
   {
     "model": "NutritionPartner",
     "data": {
       "id": 2,
-      "name": "Test name 2"
+      "name": "Test name 2",
+      "phoneNumber": "6506780987"
     }
   }
 ]

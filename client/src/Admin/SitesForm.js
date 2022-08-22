@@ -93,6 +93,12 @@ function SitesForm() {
               </label>
               <input type="text" className="form-control" id="email" name="email" onChange={onChange} value={data.email} />
             </div>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="website">
+                website
+              </label>
+              <input type="text" className="form-control" id="website" name="website" onChange={onChange} value={data.website} />
+            </div>
             <button type="submit" className="btn btn-primary">
               Submit
             </button>

@@ -8,6 +8,7 @@ router.use('/passwords', require('./passwords'));
 router.use('/populations', require('./populations'));
 router.use('/sites', require('./sites'));
 router.use('/hours', require('./hours'));
+router.use('/nutritionpartners', requre('./nutritionpartners'));
 router.use('/covidstatuses', require('./covidstatuses'));
 router.use('/sitecovidstatuses', require('./sitecovidstatuses'));
 router.use('/users', require('./users'));

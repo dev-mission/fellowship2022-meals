@@ -56,6 +56,11 @@ function Navigation() {
                 LOCATIONS
               </Link>
             </li>
+            <li className="nav-item active">
+              <Link className="nav-link" aria-current="page" to="/nutritionpartners">
+                NUTRITION PARTNERS
+              </Link>
+            </li>
             {user && (
               <li className="nav-item">
                 <a className="nav-link" href="/logout" onClick={onLogout}>

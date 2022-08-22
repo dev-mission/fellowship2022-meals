@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
-    const record = await models.Site.create(_.pick(req.body, ['name', 'address', 'phoneNumber', 'email']));
+    const record = await models.Site.create(_.pick(req.body, ['name', 'address', 'phoneNumber', 'email', 'website']));
     res.status(HttpStatus.CREATED).json(record.toJSON());
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
@@ -46,7 +46,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
     await models.sequelize.transaction(async (transaction) => {
       record = await models.Site.findByPk(req.params.id, { transaction });
       if (record) {
-        await record.update(_.pick(req.body, ['name', 'address', 'phoneNumber', 'email']), { transaction });
+        await record.update(_.pick(req.body, ['name', 'address', 'phoneNumber', 'email', 'website']), { transaction });
       }
     });
     if (record) {

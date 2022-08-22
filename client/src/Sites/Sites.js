@@ -22,7 +22,7 @@ function Sites() {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         setData(data);
         setError(null);
       })
