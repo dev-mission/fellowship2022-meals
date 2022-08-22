@@ -40,15 +40,18 @@ describe('models.Hours', () => {
       close: '2:30',
       type: 'lunch',
     });
+
+    // await hour.save();
     await assert.rejects(hour.save(), (error) => {
+      // assert(error instanceof models.Sequelize.ValidationError);
       // assert.deepStrictEqual(error.errors.length, 1);
 
-      //   assert(
-      //     _.find(error.errors, {
-      //       path: 'lastName',
-      //       message: 'Last name cannot be blank',
-      //     })
-      //   );
+      assert(
+        _.find(error.errors, {
+          path: 'day',
+          message: 'Hours: invalid day. day of the week is represented where 0 is Sunday ... 6 is Saturday',
+        })
+      );
       // assert(
       //   _.find(error.errors, {
       //     path: 'email',
