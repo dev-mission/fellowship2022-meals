@@ -4,20 +4,21 @@ import './App.scss';
 
 import { AuthContextProvider, AuthProtected } from './AuthContext';
 import Header from './Header';
+import Navigation from './Navigation';
 import Home from './Home';
 import Login from './Login';
 import PasswordRoutes from './Passwords/PasswordRoutes';
 import Register from './Register';
 import UserRoutes from './Users/UserRoutes';
 import SitesForm from './Admin/SitesForm';
-
 import Sites from './Sites/Sites';
+import Footer from './Footer';
 
 function App() {
   return (
     <AuthContextProvider>
       <Router>
-        <Header />
+        <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -49,6 +50,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </Router>
     </AuthContextProvider>
   );

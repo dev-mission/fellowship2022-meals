@@ -51,7 +51,7 @@ function Sites() {
       <div className="heading">Locations</div>
       <div className="sites-list">
         {user?.isAdmin && (
-          <Link to="new">
+          <Link style={{ textDecoration: 'none' }} to="new">
             <div className="add-site">
               <i className="fa fa-plus fa-lg phone" aria-hidden="true"></i>
               Add new site
