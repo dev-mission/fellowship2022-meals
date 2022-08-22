@@ -70,6 +70,7 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
+      console.log(req.params.id);
       record = await models.Site.findByPk(req.params.id, { transaction });
       if (record) {
         await record.destroy({ transaction });

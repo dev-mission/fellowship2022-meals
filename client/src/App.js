@@ -11,6 +11,8 @@ import Register from './Register';
 import UserRoutes from './Users/UserRoutes';
 import SitesForm from './Admin/SitesForm';
 
+import Sites from './Sites/Sites';
+
 function App() {
   return (
     <AuthContextProvider>
@@ -20,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/passwords/*" element={<PasswordRoutes />} />
+          <Route path="/sites" element={<Sites />} />
           {process.env.REACT_APP_FEATURE_REGISTRATION === 'true' && <Route path="/register" element={<Register />} />}
           <Route
             path="/account/*"

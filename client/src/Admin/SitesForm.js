@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAuthContext } from '../AuthContext';
+
 import Api from '../Api';
 
 function SitesForm() {
   const navigate = useNavigate();
+  const user = useAuthContext();
   const { id } = useParams();
   const [data, setData] = useState({
     name: '',
@@ -19,6 +22,7 @@ function SitesForm() {
   }, [id]);
 
   async function onSubmit(event) {
+    console.log(event);
     event.preventDefault();
     try {
       let response;
@@ -27,7 +31,20 @@ function SitesForm() {
       } else {
         response = await Api.sites.create(data);
       }
-      //   navigate(`/sites/${response.data.id}`);
+      navigate(`/sites/`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function onDelete() {
+    try {
+      let response;
+      if (id) {
+        // console.log(id);
+        response = await Api.sites.delete(id);
+      }
+      navigate(`/sites/`);
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +97,14 @@ function SitesForm() {
               Submit
             </button>
           </form>
+          {id && (
+            <button
+              className="btn btn-primary"
+              style={{ background: '#dd4a68', border: '1px solid #dd4a68', marginTop: '10px' }}
+              onClick={onDelete}>
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </main>

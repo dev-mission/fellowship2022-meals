@@ -70,7 +70,7 @@ const Api = {
       return instance.patch(`/api/sites/${id}`, data);
     },
     delete(id) {
-      return instance.delete(`/api/sites${id}`);
+      return instance.delete(`/api/sites/${id}`);
     },
   },
 };
