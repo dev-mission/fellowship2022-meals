@@ -13,6 +13,8 @@ import UserRoutes from './Users/UserRoutes';
 import SitesForm from './Admin/SitesForm';
 import Sites from './Sites/Sites';
 import Footer from './Footer';
+import PartnersForm from './Admin/PartnersForm';
+import NutritionPartners from './NutritionPartners/NutritionPartners';
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/passwords/*" element={<PasswordRoutes />} />
           <Route path="/sites" element={<Sites />} />
+          <Route path="/partners" element={<NutritionPartners />} />
           {process.env.REACT_APP_FEATURE_REGISTRATION === 'true' && <Route path="/register" element={<Register />} />}
           <Route
             path="/account/*"
@@ -46,6 +49,14 @@ function App() {
             element={
               <AuthProtected isAdminRequired={true}>
                 <SitesForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/partners/new"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <PartnersForm />
               </AuthProtected>
             }
           />

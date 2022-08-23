@@ -3,14 +3,20 @@
     "model": "NutritionPartner",
     "data": {
       "id": 1,
-      "name": "Test name 1"
+      "name": "Test name 1",
+      "phoneNumber": "6503217654",
+      "email": "davis@davis.org",
+      "website": "test1.com"
     }
   },
   {
     "model": "NutritionPartner",
     "data": {
       "id": 2,
-      "name": "Test name 2"
+      "name": "Test name 2",
+      "phoneNumber": "6503217654",
+      "email": "davis@davis.org",
+      "website": "test2.com"
     }
   }
 ]

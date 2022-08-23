@@ -16,7 +16,7 @@ describe('models.Site', () => {
     let newSite = models.Site.build({
       name: 'testName',
       address: '123 testing st',
-      phoneNumber: '4151231234',
+      phoneNumber: '',
       email: 'testing@gmail.com',
     });
 
@@ -27,7 +27,7 @@ describe('models.Site', () => {
     site = await models.Site.findByPk(newSite.id);
     assert.deepStrictEqual(site.name, 'testName');
     assert.deepStrictEqual(site.address, '123 testing st');
-    assert.deepStrictEqual(site.phoneNumber, '4151231234');
+    assert.deepStrictEqual(site.phoneNumber, '');
     assert.deepStrictEqual(site.email, 'testing@gmail.com');
   });
 
@@ -35,12 +35,12 @@ describe('models.Site', () => {
     const site = models.Site.build({
       name: '',
       address: '',
-      phoneNumber: '',
+      phoneNumber: '1',
       email: '',
     });
     await assert.rejects(site.save(), (error) => {
       assert(error instanceof models.Sequelize.ValidationError);
-      assert.deepStrictEqual(error.errors.length, 4);
+      assert.deepStrictEqual(error.errors.length, 3);
       assert(
         _.find(error.errors, {
           path: 'name',
@@ -57,12 +57,6 @@ describe('models.Site', () => {
         _.find(error.errors, {
           path: 'phoneNumber',
           message: 'Invalid phone number, ten numbers only',
-        })
-      );
-      assert(
-        _.find(error.errors, {
-          path: 'email',
-          message: 'Site: email cannot be blank',
         })
       );
       return true;

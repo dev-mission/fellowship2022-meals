@@ -73,6 +73,23 @@ const Api = {
       return instance.delete(`/api/sites/${id}`);
     },
   },
+  nutritionpartners: {
+    getall() {
+      return instance.get('/api/nutritionpartners');
+    },
+    get(id) {
+      return instance.get(`/api/nutritionpartners/${id}`);
+    },
+    create(data) {
+      return instance.post('/api/nutritionpartners/', data);
+    },
+    update(id, data) {
+      return instance.patch(`/api/nutritionpartners/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/nutritionpartners/${id}`);
+    },
+  },
 };
 
 export default Api;

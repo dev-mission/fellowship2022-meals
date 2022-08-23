@@ -48,6 +48,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValid(value) {
+            if (value.length == 0) {
+              return;
+            }
             if (value.match(/^[0-9]{10}$/) == null) {
               throw new Error('Invalid phone number, ten numbers only');
             }
@@ -56,15 +59,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Site: email cannot be blank',
-          },
-          notEmpty: {
-            msg: 'Site: email cannot be blank',
-          },
-        },
+        allowNull: true,
+      },
+      website: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {
