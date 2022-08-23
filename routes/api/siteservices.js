@@ -9,14 +9,14 @@ const helpers = require('../helpers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const records = await models.sitemealtype.findAll();
-  res.json(records.map((r) => r.toJSON()));
+  const allSiteServices = await models.SiteService.findAll();
+  res.json(allSiteServices.map((r) => r.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
-  const record = await models.sitemealtype.findByPk(req.params.id);
-  if (record) {
-    res.json(record.toJSON());
+  const SiteService = await models.SiteService.findByPk(req.params.id);
+  if (SiteService) {
+    res.json(SiteService.toJSON());
   } else {
     res.status(HttpStatus.NOT_FOUND).end();
   }
@@ -24,7 +24,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
-    const record = await models.sitemealtype.create(_.pick(req.body, ['Title', 'Text', 'AttachmentUrl']));
+    const record = await models.SiteService.create(_.pick(req.body, ['SiteId', 'ServiceId']));
     res.status(HttpStatus.CREATED).json(record.toJSON());
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
@@ -42,9 +42,9 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.sitemealtype.findByPk(req.params.id, { transaction });
+      record = await models.SiteService.findByPk(req.params.id, { transaction });
       if (record) {
-        await record.update(_.pick(req.body, ['Title', 'Text', 'AttachmentUrl']), { transaction });
+        await record.update(_.pick(req.body, ['SiteId', 'ServiceId']), { transaction });
       }
     });
     if (record) {
@@ -68,7 +68,7 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.sitemealtype.findByPk(req.params.id, { transaction });
+      record = await models.SiteService.findByPk(req.params.id, { transaction });
       if (record) {
         await record.destroy({ transaction });
       }
