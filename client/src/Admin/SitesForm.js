@@ -10,30 +10,33 @@ function SitesForm() {
   const navigate = useNavigate();
   const user = useAuthContext();
   const { id } = useParams();
-  const [partners, setPartner] = useState(null);
-  const [selectedPartner, setSelectedPartner] = useState(null);
+  const [partners, setPartners] = useState(null);
   const [data, setData] = useState({
     name: '',
     address: '',
-    phonenumber: '',
+    phoneNumber: '',
     email: '',
     website: '',
+    NutritionPartnerIds: [],
   });
 
   useEffect(() => {
     if (id) {
-      Api.sites.get(id).then((response) => setData(response.data));
+      Api.sites.get(id).then((response) => {
+        const { data } = response;
+        data.NutritionPartnerIds = data.NutritionPartners?.map((np) => np.id);
+        setData(data);
+      });
     }
   }, [id]);
 
   useEffect(() => {
     Api.nutritionpartners.getall().then((response) => {
-      setPartner(response.data);
+      setPartners(response.data);
     });
   }, []);
 
   async function onSubmit(event) {
-    console.log(data);
     event.preventDefault();
     try {
       let response;
@@ -67,10 +70,17 @@ function SitesForm() {
     setData(newData);
   }
 
-  function updatePartner(index) {
-    let dropdownMenuButton = document.getElementById('dropdownMenuButton');
-    dropdownMenuButton.innerHTML = partners[index].name;
-    setSelectedPartner(partners[index]);
+  function updateAssociation(event) {
+    const newData = { ...data };
+    if (event.target.checked) {
+      newData[event.target.name].push(parseInt(event.target.value));
+    } else {
+      const index = newData[event.target.name].indexOf(parseInt(event.target.value));
+      if (index >= 0) {
+        newData[event.target.name].splice(index, 1);
+      }
+    }
+    setData(newData);
   }
 
   return (
@@ -116,29 +126,25 @@ function SitesForm() {
               </label>
               <input type="text" className="form-control" id="website" name="website" onChange={onChange} value={data.website} />
             </div>
-            <div className="dropdown">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
-                Nutrition Partner
-              </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <Link style={{ textDecoration: 'none' }} to="/partners/new">
-                  <div className="dropdown-item">
-                    <i className="fa fa-plus phone" aria-hidden="true"></i>
-                    Add a new partner
-                  </div>
-                </Link>
-                {partners &&
-                  partners.map((partner, index) => (
-                    <div className="dropdown-item" onClick={() => updatePartner(index)}>
+            <div className="mb-3">
+              <label className="form-label">nutrition partners</label>
+              <div>
+                {partners?.map((partner) => (
+                  <div key={`partner-${id}`} className="form-check">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id={`partner-${partner.id}`}
+                      name="NutritionPartnerIds"
+                      value={partner.id}
+                      onChange={updateAssociation}
+                      checked={data.NutritionPartnerIds.includes(partner.id)}
+                    />
+                    <label className="form-check-label" htmlFor={`partner-${partner.id}`}>
                       {partner.name}
-                    </div>
-                  ))}
+                    </label>
+                  </div>
+                ))}
               </div>
             </div>
             <button type="submit" className="btn btn-primary">
