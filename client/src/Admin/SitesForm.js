@@ -22,7 +22,11 @@ function SitesForm() {
 
   useEffect(() => {
     if (id) {
-      Api.sites.get(id).then((response) => setData(response.data));
+      Api.sites.get(id).then((response) => {
+        const { data } = response;
+        data.NutritionPartnerIds = data.NutritionPartners?.map((np) => np.id);
+        setData(data);
+      });
     }
   }, [id]);
 
@@ -33,7 +37,6 @@ function SitesForm() {
   }, []);
 
   async function onSubmit(event) {
-    console.log(data);
     event.preventDefault();
     try {
       let response;

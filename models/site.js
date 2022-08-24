@@ -17,12 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       Site.belongsToMany(models.Service, { through: models.SiteService });
       Site.hasMany(models.Hours);
     }
-
-    toJSON() {
-      const json = _.pick(this.get(), ['id', 'name', 'address', 'phoneNumber', 'email', 'website']);
-      json.NutritionPartnerIds = this.NutritionPartners?.map((np) => np.id) ?? [];
-      return json;
-    }
   }
 
   Site.init(
