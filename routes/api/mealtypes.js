@@ -9,14 +9,14 @@ const helpers = require('../helpers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const allNutritionPartners = await models.NutritionPartner.findAll();
-  res.json(allNutritionPartners.map((r) => r.toJSON()));
+  const allMealTypes = await models.MealType.findAll();
+  res.json(allMealTypes.map((r) => r.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
-  const NutritionPartner = await models.NutritionPartner.findByPk(req.params.id);
-  if (NutritionPartner) {
-    res.json(NutritionPartner.toJSON());
+  const MealType = await models.MealType.findByPk(req.params.id);
+  if (MealType) {
+    res.json(MealType.toJSON());
   } else {
     res.status(HttpStatus.NOT_FOUND).end();
   }
@@ -24,7 +24,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
-    const record = await models.NutritionPartner.create(_.pick(req.body, ['name', 'phoneNumber', 'email', 'website']));
+    const record = await models.MealType.create(_.pick(req.body, ['name']));
     res.status(HttpStatus.CREATED).json(record.toJSON());
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
@@ -42,9 +42,9 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.NutritionPartner.findByPk(req.params.id, { transaction });
+      record = await models.MealType.findByPk(req.params.id, { transaction });
       if (record) {
-        await record.update(_.pick(req.body, ['name', 'phoneNumber', 'email', 'website']), { transaction });
+        await record.update(_.pick(req.body, ['name']), { transaction });
       }
     });
     if (record) {
@@ -68,7 +68,7 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.NutritionPartner.findByPk(req.params.id, { transaction });
+      record = await models.MealType.findByPk(req.params.id, { transaction });
       if (record) {
         await record.destroy({ transaction });
       }
