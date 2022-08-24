@@ -1,5 +1,6 @@
-'use strict';
+const _ = require('lodash');
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Site extends Model {
     /**
@@ -16,7 +17,14 @@ module.exports = (sequelize, DataTypes) => {
       Site.belongsToMany(models.Service, { through: models.SiteService });
       Site.hasMany(models.Hours);
     }
+
+    toJSON() {
+      const json = _.pick(this.get(), ['id', 'name', 'address', 'phoneNumber', 'email', 'website']);
+      json.NutritionPartnerIds = this.NutritionPartners?.map((np) => np.id) ?? [];
+      return json;
+    }
   }
+
   Site.init(
     {
       name: {
@@ -48,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isValid(value) {
-            if (value.length == 0) {
+            if (value.length === 0) {
               return;
             }
             if (value.match(/^[0-9]{10}$/) == null) {
