@@ -4,18 +4,14 @@ const router = express.Router();
 
 router.use('/assets', require('./assets'));
 router.use('/auth', require('./auth'));
-router.use('/passwords', require('./passwords'));
-router.use('/populations', require('./populations'));
-router.use('/sites', require('./sites'));
-router.use('/hours', require('./hours'));
 router.use('/covidstatuses', require('./covidstatuses'));
-router.use('/sitecovidstatuses', require('./sitecovidstatuses'));
-router.use('/users', require('./users'));
+router.use('/hours', require('./hours'));
 router.use('/mealtypes', require('./mealtypes'));
 router.use('/nutritionpartners', require('./nutritionpartners'));
+router.use('/passwords', require('./passwords'));
+router.use('/populations', require('./populations'));
 router.use('/services', require('./services'));
-router.use('/sitemealtypes', require('./sitemealtypes'));
-router.use('/sitenutritionpartners', require('./sitenutritionpartners'));
-router.use('/siteservices', require('./siteservices'));
+router.use('/sites', require('./sites'));
+router.use('/users', require('./users'));
 
 module.exports = router;
