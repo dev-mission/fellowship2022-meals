@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('SiteMealTypes', {
+    await queryInterface.createTable('SiteCovidStatuses', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,12 +18,12 @@ module.exports = {
           key: 'id',
         },
       },
-      MealTypeId: {
+      CovidStatusId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: {
-            tableName: 'MealTypes',
+            tableName: 'CovidStatuses',
           },
           key: 'id',
         },
@@ -38,14 +38,14 @@ module.exports = {
       },
     });
     // set starting id to larger value so it doesn't conflict with test fixtures
-    await queryInterface.sequelize.query('ALTER SEQUENCE "SiteMealTypes_id_seq" RESTART WITH 100;');
+    await queryInterface.sequelize.query('ALTER SEQUENCE "SiteCovidStatuses_id_seq" RESTART WITH 100;');
     // create a unique compound index to prevent duplicates
-    await queryInterface.addIndex('SiteMealTypes', {
-      fields: ['SiteId', 'MealTypeId'],
+    await queryInterface.addIndex('SiteCovidStatuses', {
+      fields: ['SiteId', 'CovidStatusId'],
       unique: true,
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SiteMealTypes');
+    await queryInterface.dropTable('SiteCovidStatuses');
   },
 };

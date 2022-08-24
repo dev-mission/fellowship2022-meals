@@ -1,0 +1,78 @@
+.site-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  .site-name {
+    // border: 1px solid black;
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: 0.4px;
+    line-height: 1.25;
+    color: #037493;
+
+    width: fit-content;
+  }
+
+  .site-name:hover {
+    text-decoration: underline;
+  }
+
+  .site-address {
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.4px;
+    color: #333;
+  }
+
+  .site-phone-number {
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    color: #037493;
+
+    width: fit-content;
+    .phone {
+      margin-right: 8px;
+    }
+  }
+
+  .site-phone-number:hover {
+    color: #00c7cc;
+    text-decoration: underline;
+  }
+
+  .population {
+    color: #c3412b;
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-block;
+
+    span {
+      color: #5d6063;
+      border-bottom: 1px dashed #00aecd;
+    }
+
+    span:hover {
+      border-bottom: 1px solid #00aecd;
+      cursor: pointer;
+    }
+  }
+
+  .edit {
+    width: fit-content;
+    height: fit-content;
+    padding: 8px 35px;
+
+    background: #037493;
+    color: #fff;
+    border-radius: 25px;
+    text-decoration: none;
+  }
+
+  .edit:hover {
+    background-color: #0f2549;
+    cursor: pointer;
+  }
+}

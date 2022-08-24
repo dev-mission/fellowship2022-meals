@@ -7,22 +7,15 @@ const { v4: uuid } = require('uuid');
 const helper = require('../helper');
 const models = require('../../models');
 
-describe('models.SiteMealType', () => {
-  beforeEach(async () => {
-    await helper.loadFixtures(['sites', 'mealtypes']);
-  });
-
+describe('models.SitePopulation', () => {
   it('creates a new record', async () => {
-    let record = models.SiteMealType.build({
-      SiteId: 1,
-      MealTypeId: 1,
+    let record = models.Population.build({
+      name: 'youngsters',
     });
     assert.deepStrictEqual(record.id, null);
     await record.save();
     assert(record.id);
-
-    test = await models.SiteMealType.findByPk(record.id);
-    assert.deepStrictEqual(test.SiteId, 1);
-    assert.deepStrictEqual(test.MealTypeId, 1);
+    test = await models.Population.findByPk(record.id);
+    assert(test.name, 'youngsters');
   });
 });

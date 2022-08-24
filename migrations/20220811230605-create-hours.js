@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('SiteMealTypes', {
+    await queryInterface.createTable('Hours', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,15 +18,17 @@ module.exports = {
           key: 'id',
         },
       },
-      MealTypeId: {
+      day: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: {
-            tableName: 'MealTypes',
-          },
-          key: 'id',
-        },
+      },
+      open: {
+        type: Sequelize.TIME,
+      },
+      close: {
+        type: Sequelize.TIME,
+      },
+      type: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -38,14 +40,9 @@ module.exports = {
       },
     });
     // set starting id to larger value so it doesn't conflict with test fixtures
-    await queryInterface.sequelize.query('ALTER SEQUENCE "SiteMealTypes_id_seq" RESTART WITH 100;');
-    // create a unique compound index to prevent duplicates
-    await queryInterface.addIndex('SiteMealTypes', {
-      fields: ['SiteId', 'MealTypeId'],
-      unique: true,
-    });
+    await queryInterface.sequelize.query('ALTER SEQUENCE "Hours_id_seq" RESTART WITH 100;');
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SiteMealTypes');
+    await queryInterface.dropTable('Hours');
   },
 };

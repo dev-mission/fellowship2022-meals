@@ -8,17 +8,15 @@ const helpers = require('../helpers');
 
 const router = express.Router();
 
-// Get all population
 router.get('/', async (req, res) => {
-  const allPopulation = await models.Population.findAll();
-  res.json(allPopulation.map((r) => r.toJSON()));
+  const allCovidStatuses = await models.CovidStatus.findAll();
+  res.json(allCovidStatuses.map((r) => r.toJSON()));
 });
 
-// Get a population by id
 router.get('/:id', async (req, res) => {
-  const populations = await models.Population.findByPk(req.params.id);
-  if (populations) {
-    res.json(record.toJSON());
+  const CovidStatus = await models.CovidStatus.findByPk(req.params.id);
+  if (CovidStatus) {
+    res.json(CovidStatus.toJSON());
   } else {
     res.status(HttpStatus.NOT_FOUND).end();
   }
@@ -26,7 +24,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
-    const record = await models.Population.create(_.pick(req.body, ['name']));
+    const record = await models.CovidStatus.create(_.pick(req.body, ['name']));
     res.status(HttpStatus.CREATED).json(record.toJSON());
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
@@ -44,7 +42,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Population.findByPk(req.params.id, { transaction });
+      record = await models.CovidStatus.findByPk(req.params.id, { transaction });
       if (record) {
         await record.update(_.pick(req.body, ['name']), { transaction });
       }
@@ -70,7 +68,7 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     let record;
     await models.sequelize.transaction(async (transaction) => {
-      record = await models.Population.findByPk(req.params.id, { transaction });
+      record = await models.CovidStatus.findByPk(req.params.id, { transaction });
       if (record) {
         await record.destroy({ transaction });
       }
