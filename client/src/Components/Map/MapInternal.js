@@ -2,15 +2,12 @@ import { useEffect, useRef } from 'react';
 
 import './MapInternal.scss';
 
-function MapInternal({ id, children }) {
+function MapInternal({ id, center, zoom, children }) {
   const ref = useRef();
 
   useEffect(() => {
-    new window.google.maps.Map(ref.current, {
-      center: { lat: 37.7749, lng: -122.4194 },
-      zoom: 14,
-    });
-  }, []);
+    new window.google.maps.Map(ref.current, { center, zoom });
+  }, [center, zoom]);
 
   return (
     <div className="mapint">

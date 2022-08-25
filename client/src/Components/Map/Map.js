@@ -2,10 +2,12 @@ import { Wrapper } from '@googlemaps/react-wrapper';
 
 import MapInternal from './MapInternal';
 
-function Map({ id, apiKey, children }) {
+function Map({ id, apiKey, center, zoom, children }) {
   return (
     <Wrapper apiKey={apiKey}>
-      <MapInternal id={id}>{children}</MapInternal>
+      <MapInternal id={id} center={center} zoom={zoom}>
+        {children}
+      </MapInternal>
     </Wrapper>
   );
 }
