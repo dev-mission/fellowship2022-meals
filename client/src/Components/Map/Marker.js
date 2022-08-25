@@ -22,7 +22,7 @@ function Marker(options) {
       marker.setOptions(options);
       listener = marker.addListener('click', (event) => {
         if (options.onClick) {
-          options.onClick(marker, event);
+          options.onClick(event, marker, options.map, options.infoWindow);
         }
       });
     }

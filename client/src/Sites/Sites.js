@@ -46,6 +46,15 @@ function Sites() {
     [setUser]
   );
 
+  function onMarkerClick(event, marker, map, infoWindow) {
+    infoWindow.close();
+    infoWindow.setContent('<h1>Test</h1>');
+    infoWindow.open({
+      anchor: marker,
+      map,
+    });
+  }
+
   return (
     <div className="sites">
       <div className="line"></div>
@@ -70,7 +79,7 @@ function Sites() {
           </div>
           <div className="col-md-8">
             <Map apiKey={window.env.REACT_APP_GOOGLE_MAPS_API_KEY} id="map" center={{ lat: 37.7749, lng: -122.4194 }} zoom={14}>
-              <Marker onClick={(m, e) => console.log('!', m, e)} position={{ lat: 37.7749, lng: -122.4194 }} />
+              <Marker onClick={onMarkerClick} position={{ lat: 37.7749, lng: -122.4194 }} />
             </Map>
           </div>
         </div>
