@@ -48,7 +48,10 @@ function Sites() {
 
   function onMarkerClick(event, marker, map, infoWindow) {
     infoWindow.close();
-    infoWindow.setContent('<h1>Test</h1>');
+    infoWindow.setContent(`
+      <h3>${marker.site?.name}</h3>
+      <p>${marker.site?.address}</p>
+    `);
     infoWindow.open({
       anchor: marker,
       map,
@@ -79,7 +82,11 @@ function Sites() {
           </div>
           <div className="col-md-8">
             <Map apiKey={window.env.REACT_APP_GOOGLE_MAPS_API_KEY} id="map" center={{ lat: 37.7749, lng: -122.4194 }} zoom={14}>
-              <Marker onClick={onMarkerClick} position={{ lat: 37.7749, lng: -122.4194 }} />
+              {data
+                ?.filter((site) => site.lat && site.lng)
+                .map((site) => (
+                  <Marker key={`marker-${site.id}`} site={site} onClick={onMarkerClick} position={{ lat: site.lat, lng: site.lng }} />
+                ))}
             </Map>
           </div>
         </div>
