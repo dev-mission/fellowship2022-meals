@@ -1,0 +1,26 @@
+[
+  {
+    "model": "SitePopulation",
+    "data": {
+      "id": 1,
+      "SiteId": 1,
+      "PopulationId": 1
+    }
+  },
+  {
+    "model": "SitePopulation",
+    "data": {
+      "id": 2,
+      "SiteId": 1,
+      "PopulationId": 2
+    }
+  },
+  {
+    "model": "SitePopulation",
+    "data": {
+      "id": 3,
+      "SiteId": 2,
+      "PopulationId": 1
+    }
+  }
+]

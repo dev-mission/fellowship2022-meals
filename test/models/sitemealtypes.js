@@ -8,6 +8,10 @@ const helper = require('../helper');
 const models = require('../../models');
 
 describe('models.SiteMealType', () => {
+  beforeEach(async () => {
+    await helper.loadFixtures(['sites', 'mealtypes']);
+  });
+
   it('creates a new record', async () => {
     let record = models.SiteMealType.build({
       SiteId: 1,
@@ -18,7 +22,7 @@ describe('models.SiteMealType', () => {
     assert(record.id);
 
     test = await models.SiteMealType.findByPk(record.id);
-    assert.deepStrictEqual(record.SiteId, 1);
-    assert.deepStrictEqual(record.MealTypeId, 1);
+    assert.deepStrictEqual(test.SiteId, 1);
+    assert.deepStrictEqual(test.MealTypeId, 1);
   });
 });

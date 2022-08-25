@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('MealTypes', {
+    await queryInterface.createTable('Sites', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,6 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       name: {
+        type: Sequelize.STRING,
+      },
+      address: {
+        type: Sequelize.STRING,
+      },
+      phoneNumber: {
+        type: Sequelize.STRING,
+      },
+      email: {
+        type: Sequelize.STRING,
+      },
+      website: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -20,11 +32,10 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-
     // set starting id to larger value so it doesn't conflict with test fixtures
-    await queryInterface.sequelize.query('ALTER SEQUENCE "MealTypes_id_seq" RESTART WITH 100;');
+    await queryInterface.sequelize.query('ALTER SEQUENCE "Sites_id_seq" RESTART WITH 100;');
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('MealTypes');
+    await queryInterface.dropTable('Sites');
   },
 };

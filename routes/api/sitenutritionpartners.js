@@ -9,14 +9,14 @@ const helpers = require('../helpers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const allSiteNutritionPartners = await models.SiteNutritionPartner.findAll();
-  res.json(allSiteNutritionPartners.map((r) => r.toJSON()));
+  const allSitePartner = await models.SiteNutritionPartner.findAll();
+  res.json(allSitePartner.map((r) => r.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
-  const SiteNutritionPartner = await models.SiteNutritionPartner.findByPk(req.params.id);
-  if (SiteNutritionPartner) {
-    res.json(SiteNutritionPartner.toJSON());
+  const record = await models.SiteNutritionPartner.findByPk(req.params.id);
+  if (record) {
+    res.json(record.toJSON());
   } else {
     res.status(HttpStatus.NOT_FOUND).end();
   }

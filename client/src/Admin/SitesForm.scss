@@ -1,0 +1,17 @@
+.dropdown {
+  margin-bottom: 20px;
+  .btn {
+    width: 100%;
+  }
+  .dropdown-menu {
+    width: 100%;
+
+    .dropdown-item {
+      border-bottom: 1px solid #eee;
+      text-align: center;
+      .phone {
+        margin-right: 10px;
+      }
+    }
+  }
+}

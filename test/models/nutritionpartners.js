@@ -1,8 +1,4 @@
 const assert = require('assert');
-const _ = require('lodash');
-const fs = require('fs-extra');
-const path = require('path');
-const { v4: uuid } = require('uuid');
 
 const helper = require('../helper');
 const models = require('../../models');
@@ -14,13 +10,19 @@ describe('models.NutritionPartner', () => {
 
   it('creates a new Item record', async () => {
     let item = models.NutritionPartner.build({
-      name: 'Test name 1',
+      name: 'testName',
+      phoneNumber: '',
+      email: 'testing@gmail.com',
+      website: 'testing.org',
     });
     assert.deepStrictEqual(item.id, null);
     await item.save();
     assert(item.id);
 
     test = await models.NutritionPartner.findByPk(item.id);
-    assert.deepStrictEqual(test.name, 'Test name 1');
+    assert.deepStrictEqual(test.name, 'testName');
+    assert.deepStrictEqual(test.phoneNumber, '');
+    assert.deepStrictEqual(test.email, 'testing@gmail.com');
+    assert.deepStrictEqual(test.website, 'testing.org');
   });
 });
