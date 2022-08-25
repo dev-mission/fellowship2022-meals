@@ -14,7 +14,18 @@ module.exports = (sequelize, DataTypes) => {
   }
   Population.init(
     {
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Population: name cannot be blank',
+          },
+          notEmpty: {
+            msg: 'Population: name cannot be blank',
+          },
+        },
+      },
     },
     {
       sequelize,

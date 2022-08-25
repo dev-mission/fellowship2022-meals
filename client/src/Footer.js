@@ -9,10 +9,10 @@ function Footer() {
         <div className="information">
           <div className="general-information">
             General information: <span style={{ fontWeight: '400' }}>Call </span>
-            <span className="span-phone">
+            <a className="span-phone" href="tel:4175575000">
               <i className="fa fa-phone fa-lg phone" aria-hidden="true"></i>
               (417) 557-5000
-            </span>
+            </a>
             .
           </div>
           <div className="general-information">

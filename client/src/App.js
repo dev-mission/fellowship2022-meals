@@ -15,6 +15,7 @@ import Sites from './Sites/Sites';
 import Footer from './Footer';
 import PartnersForm from './Admin/PartnersForm';
 import NutritionPartners from './NutritionPartners/NutritionPartners';
+import PopulationsForm from './Admin/PopulationsForm';
 
 function App() {
   return (
@@ -57,6 +58,30 @@ function App() {
             element={
               <AuthProtected isAdminRequired={true}>
                 <PartnersForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/partners/:id/edit"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <PartnersForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/populations/new"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <PopulationsForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/populations/:id/edit"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <PopulationsForm />
               </AuthProtected>
             }
           />

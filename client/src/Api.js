@@ -90,6 +90,23 @@ const Api = {
       return instance.delete(`/api/nutritionpartners/${id}`);
     },
   },
+  populations: {
+    getall() {
+      return instance.get('/api/populations');
+    },
+    get(id) {
+      return instance.get(`/api/populations/${id}`);
+    },
+    create(data) {
+      return instance.post('/api/populations/', data);
+    },
+    update(id, data) {
+      return instance.patch(`/api/populations/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/populations/${id}`);
+    },
+  },
 };
 
 export default Api;
