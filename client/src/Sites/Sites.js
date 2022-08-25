@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../AuthContext';
 
-import './Sites.scss';
 import Api from '../Api';
+import { Map } from '../Components/Map';
+
+import './Sites.scss';
 
 import SiteItem from './SiteItem';
 
@@ -58,12 +60,19 @@ function Sites() {
             </div>
           </Link>
         )}
-        {data &&
-          data.map((site) => (
-            <div>
-              <SiteItem data={site} />
-            </div>
-          ))}
+        <div className="row">
+          <div className="col-md-4">
+            {data &&
+              data.map((site) => (
+                <div key={site.id}>
+                  <SiteItem data={site} />
+                </div>
+              ))}
+          </div>
+          <div className="col-md-8">
+            <Map apiKey={window.env.REACT_APP_GOOGLE_MAPS_API_KEY} id="map"></Map>
+          </div>
+        </div>
       </div>
     </div>
   );
