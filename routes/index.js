@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 
 const router = express.Router();
@@ -18,7 +19,9 @@ router.use('/api', require('./api'));
 /// serve up the client app for all other routes, per SPA client-side routing
 router.get('/*', (req, res, next) => {
   if (req.accepts('html')) {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    let data = fs.readFileSync(path.join(__dirname, '../client/build', 'index.html')).toString('utf8');
+    data = data.replace(/window\.env\.([^ =]+)[^,;<]+/g, (match, p1) => `window.env.${p1} = '${process.env[p1] ?? ''}'`);
+    res.send(data);
   } else {
     next();
   }

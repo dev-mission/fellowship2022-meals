@@ -12,6 +12,7 @@
     "test": "mocha --recursive"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.16",
     "aws-sdk": "^2.931.0",
     "bcrypt": "^5.0.1",
     "cookie-session": "^1.4.0",

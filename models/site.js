@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { Client } = require('@googlemaps/google-maps-services-js');
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -45,6 +45,12 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      lat: {
+        type: DataTypes.FLOAT,
+      },
+      lng: {
+        type: DataTypes.FLOAT,
+      },
       phoneNumber: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -73,5 +79,29 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Site',
     }
   );
+
+  Site.beforeSave(async (site) => {
+    if (site.changed('address')) {
+      const client = new Client();
+      try {
+        const response = await client.geocode({
+          params: {
+            key: process.env.GOOGLE_MAPS_GEOCODING_API_KEY,
+            address: `${site.address}`,
+          },
+        });
+        if (response.data?.results?.length) {
+          const { lat, lng } = response.data.results[0].geometry?.location ?? {};
+          if (lat && lng) {
+            site.lat = lat;
+            site.lng = lng;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  });
+
   return Site;
 };
