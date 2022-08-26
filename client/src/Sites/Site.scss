@@ -39,6 +39,8 @@ main {
   .main-content {
     padding: 80px 10%;
     display: flex;
+    width: 100%;
+    justify-content: space-around;
 
     .address-container {
       display: flex;
@@ -73,7 +75,18 @@ main {
         color: #037493;
         font-size: 24px;
         line-height: 24px;
+        margin-bottom: 11px;
       }
+    }
+
+    .link {
+      color: #037493;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      color: #00c7cc;
+      text-decoration: underline;
     }
   }
 }

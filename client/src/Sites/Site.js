@@ -21,10 +21,13 @@ function Site() {
     }
   }, [id]);
 
-  let match = data.phoneNumber.match(/^(\d{3})(\d{3})(\d{4})$/);
-
-  let number = '(' + match[1] + ') ' + match[2] + '-' + match[3];
-
+  function styleNumber(number) {
+    let match = number.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return '';
+  }
   return (
     <main>
       {data && (
@@ -92,12 +95,27 @@ function Site() {
               {data.website && (
                 <div>
                   Website:{' '}
-                  <a href={data.website} target="_blank">
+                  <a className="link" href={data.website} target="_blank">
                     <i className="fa fa-link fa-lg"></i> link
                   </a>
                 </div>
               )}
-              {data.phoneNumber && <div>Main number: {number}</div>}
+              {data.phoneNumber && (
+                <div>
+                  Main number:{' '}
+                  <a className="link" href={'tel:' + data.phoneNumber}>
+                    {styleNumber(data.phoneNumber)}
+                  </a>
+                </div>
+              )}
+              {data.email && (
+                <div>
+                  Email:{' '}
+                  <a className="link" href={'mailto:' + data.email}>
+                    {data.email}
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>
