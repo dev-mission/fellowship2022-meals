@@ -74,5 +74,23 @@
         }
       }
     }
+
+    .reset-button {
+      width: fit-content;
+      height: fit-content;
+      padding: 6px 20px;
+      margin: 0 10px;
+
+      background: #037493;
+      color: #fff;
+      border-radius: 25px;
+      text-decoration: none;
+      border: none;
+    }
+
+    .reset-button:hover {
+      background-color: #0f2549;
+      cursor: pointer;
+    }
   }
 }

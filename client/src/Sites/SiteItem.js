@@ -29,7 +29,9 @@ function SiteItem({ data }) {
   return (
     <div className="site-item">
       <div>
-        <div className="site-name">{name}</div>
+        <Link to={'/sites/' + id} style={{ textDecoration: 'none' }}>
+          <div className="site-name">{name}</div>
+        </Link>
         <div className="site-address">{address}</div>
         <div className="site-phone-number">
           <i className="fa fa-phone fa-lg phone" aria-hidden="true"></i>
@@ -38,7 +40,10 @@ function SiteItem({ data }) {
         <div className="population">
           Serves:{' '}
           {Populations.map((population) => (
-            <span>{population.name}</span>
+            <span>
+              {population.name}
+              {Populations[Populations.length - 1] != population && ' | '}
+            </span>
           ))}
         </div>
       </div>

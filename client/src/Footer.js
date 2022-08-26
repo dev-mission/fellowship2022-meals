@@ -22,7 +22,7 @@ function Footer() {
               <span className="span-phone" style={{ fontWeight: 'bold' }}>
                 Contact
               </span>{' '}
-              page to directly call the location you'd lick to reach.
+              page to directly call the location you'd like to reach.
             </span>
           </div>
         </div>

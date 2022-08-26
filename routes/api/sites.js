@@ -11,7 +11,7 @@ const router = express.Router();
 // Get all sites
 router.get('/', async (req, res) => {
   const allSite = await models.Site.findAll({
-    include: [models.NutritionPartner, models.Population, models.MealType, models.Service, models.CovidStatus],
+    include: [models.NutritionPartner, models.Population, models.MealType, models.Service, models.CovidStatus, models.Hours],
   });
   res.json(allSite.map((r) => r.toJSON()));
 });
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 // Get a site by id
 router.get('/:id', async (req, res) => {
   const site = await models.Site.findByPk(req.params.id, {
-    include: [models.NutritionPartner, models.Population, models.MealType, models.Service, models.CovidStatus],
+    include: [models.NutritionPartner, models.Population, models.MealType, models.Service, models.CovidStatus, models.Hours],
   });
   if (site) {
     res.json(site.toJSON());
@@ -39,6 +39,7 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
         await record.setMealTypes(req.body.MealTypeIds ?? [], { transaction });
         await record.setServices(req.body.ServiceIds ?? [], { transaction });
         await record.setCovidStatuses(req.body.CovidStatusIds ?? [], { transaction });
+        await record.setHours(req.body.Hours ?? [], { transaction });
       }
     });
     res.status(HttpStatus.CREATED).json(record.toJSON());
@@ -66,6 +67,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
         await record.setMealTypes(req.body.MealTypeIds ?? [], { transaction });
         await record.setServices(req.body.ServiceIds ?? [], { transaction });
         await record.setCovidStatuses(req.body.CovidStatusIds ?? [], { transaction });
+        await record.setHours(req.body.Hours ?? [], { transaction });
       }
     });
     if (record) {

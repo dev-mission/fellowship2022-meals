@@ -20,6 +20,10 @@ function Sites() {
 
   const [filters, setFilters] = useState({
     populationId: null,
+    nutritionPartnerId: null,
+    mealTypeId: null,
+    serviceId: null,
+    statusId: null,
   });
 
   useEffect(() => {
@@ -94,9 +98,35 @@ function Sites() {
     setFilters(newFilters);
   }
 
+  function resetFilter() {
+    setFilters({
+      populationId: null,
+      nutritionPartnerId: null,
+      mealTypeId: null,
+      serviceId: null,
+      statusId: null,
+    });
+  }
+
   let filteredData = data;
   if (filters.populationId) {
     filteredData = filteredData.filter((site) => site.Populations.find((p) => p.id === filters.populationId));
+  }
+
+  if (filters.nutritionPartnerId) {
+    filteredData = filteredData.filter((site) => site.NutritionPartners.find((np) => np.id === filters.nutritionPartnerId));
+  }
+
+  if (filters.mealTypeId) {
+    filteredData = filteredData.filter((site) => site.MealTypes.find((mt) => mt.id === filters.mealTypeId));
+  }
+
+  if (filters.serviceId) {
+    filteredData = filteredData.filter((site) => site.Services.find((s) => s.id === filters.serviceId));
+  }
+
+  if (filters.statusId) {
+    filteredData = filteredData.filter((site) => site.CovidStatuses.find((s) => s.id === filters.statusId));
   }
 
   return (
@@ -125,7 +155,8 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {partners?.map((partner) => (
-              <a class="dropdown-item" href="#">
+              <a onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item" href="#">
+                {filters.nutritionPartnerId === partner.id && <span>*</span>}
                 {partner.name}
               </a>
             ))}
@@ -162,7 +193,8 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {mealtypes?.map((mealtype) => (
-              <a class="dropdown-item" href="#">
+              <a onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item" href="#">
+                {filters.mealTypeId === mealtype.id && <span>*</span>}
                 {mealtype.name}
               </a>
             ))}
@@ -180,7 +212,8 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {services?.map((service) => (
-              <a class="dropdown-item" href="#">
+              <a onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item" href="#">
+                {filters.serviceId === service.id && <span>*</span>}
                 {service.name}
               </a>
             ))}
@@ -198,12 +231,17 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {statuses?.map((status) => (
-              <a class="dropdown-item" href="#">
+              <a onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item" href="#">
+                {filters.statusId === status.id && <span>*</span>}
                 {status.name}
               </a>
             ))}
           </div>
         </div>
+
+        <button onClick={resetFilter} className="reset-button">
+          Reset
+        </button>
       </div>
       <div className="sites-list">
         {filteredData &&

@@ -16,6 +16,7 @@ function SitesForm() {
   const [mealtypes, setMealTypes] = useState(null);
   const [services, setServices] = useState(null);
   const [statuses, setStatuses] = useState(null);
+  // const [hours, setHours] = useState(null);
   const [data, setData] = useState({
     name: '',
     address: '',
@@ -45,7 +46,6 @@ function SitesForm() {
         data.MealTypeIds = data.MealTypes?.map((mt) => mt.id);
         data.ServiceIds = data.Services?.map((s) => s.id);
         data.CovidStatusIds = data.CovidStatuses.map((cs) => cs.id);
-        data.Hours = [];
         console.log(data);
         setData(data);
       });

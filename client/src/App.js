@@ -19,6 +19,7 @@ import PopulationsForm from './Admin/PopulationsForm';
 import MealTypesForm from './Admin/MealTypesForm';
 import ServicesForm from './Admin/ServicesForm';
 import StatusesForm from './Admin/StatusesForm';
+import Site from './Sites/Site';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/passwords/*" element={<PasswordRoutes />} />
           <Route path="/sites" element={<Sites />} />
+          <Route path="/sites/:id" element={<Site />} />
           <Route path="/partners" element={<NutritionPartners />} />
           {process.env.REACT_APP_FEATURE_REGISTRATION === 'true' && <Route path="/register" element={<Register />} />}
           <Route
