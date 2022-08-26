@@ -90,10 +90,30 @@ function Sites() {
   }, []);
 
   function onMarkerClick(event, marker, map, infoWindow) {
+    let match = marker.site?.phoneNumber.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+    let number = '(' + match[1] + ') ' + match[2] + '-' + match[3];
+
     infoWindow.close();
     infoWindow.setContent(`
-      <h3>${marker.site?.name}</h3>
-      <p>${marker.site?.address}</p>
+      <div class="marker">
+        <a class="marker-header" href="${'/sites/' + marker.site?.id}">${marker.site?.name}</a>
+        <p>${marker.site?.address} <a href="${
+      'https://maps.google.com/?q=' + marker.site?.address
+    }" target="_blank">Get Directions <i class="fa fa-location-arrow" aria-hidden="true"></i></a></p>
+        <div class="phone-number">
+          <i class="fa fa-phone fa-lg phone" aria-hidden="true"></i>
+          <a href="${'tel:' + number}">${number}</a>
+        </div>
+        <br>
+        <div>
+          Serves:
+            ${marker.site?.Populations.map((population) => population.name)}
+        </div>
+        <br>
+        <br>
+        <a class="button" href="${'/sites/' + marker.site?.id}">SEE LOCATION DETAILS</a>
+      <div>
     `);
     infoWindow.open({
       anchor: marker,
@@ -168,10 +188,10 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {partners?.map((partner) => (
-              <a onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item" href="#">
+              <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item">
                 {filters.nutritionPartnerId === partner.id && <span>*</span>}
                 {partner.name}
-              </a>
+              </div>
             ))}
           </div>
         </div>
@@ -187,10 +207,10 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {populations?.map((population) => (
-              <a onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item" href="#">
+              <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item">
                 {filters.populationId === population.id && <span>*</span>}
                 {population.name}
-              </a>
+              </div>
             ))}
           </div>
         </div>
@@ -206,10 +226,10 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {mealtypes?.map((mealtype) => (
-              <a onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item" href="#">
+              <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item">
                 {filters.mealTypeId === mealtype.id && <span>*</span>}
                 {mealtype.name}
-              </a>
+              </div>
             ))}
           </div>
         </div>
@@ -225,10 +245,10 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {services?.map((service) => (
-              <a onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item" href="#">
+              <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item">
                 {filters.serviceId === service.id && <span>*</span>}
                 {service.name}
-              </a>
+              </div>
             ))}
           </div>
         </div>
@@ -244,10 +264,10 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {statuses?.map((status) => (
-              <a onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item" href="#">
+              <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item">
                 {filters.statusId === status.id && <span>*</span>}
                 {status.name}
-              </a>
+              </div>
             ))}
           </div>
         </div>
@@ -257,6 +277,12 @@ function Sites() {
         </button>
       </div>
       <div className="sites-list">
+        {/* {filteredData &&
+          filteredData.map((site) => (
+            <div>
+              <SiteItem data={site} />
+            </div>
+          ))} */}
         <div className="row">
           <div className="col-md-4">
             {filteredData &&
