@@ -1,0 +1,18 @@
+.mapint {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+
+.mapint__sizer {
+  margin-top: 75%;
+}
+
+.mapint__map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: gray;
+}

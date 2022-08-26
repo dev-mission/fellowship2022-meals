@@ -8,9 +8,15 @@
     "postdeploy": "sequelize db:migrate; if [ -d seeders ]; then sequelize db:seed:all; fi"
   },
   "env": {
+    "GOOGLE_MAPS_GEOCODING_API_KEY": {
+      "description": "Google Maps API Key for geocoding addresses on the server"
+    },
     "REACT_APP_FEATURE_REGISTRATION": {
       "description": "To enable user registration, enter the value: true",
       "value": "false"
+    },
+    "REACT_APP_GOOGLE_MAPS_API_KEY": {
+      "description": "Google Maps API Key for rendering maps in the browser"
     },
     "REACT_APP_SITE_TITLE": {
       "description": "The title of the website that will appear in the browser tab",

@@ -29,7 +29,7 @@ jobs:
       - run:
           command: npx sequelize db:migrate --env test
       - run:
-          command: eval $(cat example.env | grep -v DATABASE_URL | sed 's/^/export /'); npm run test
+          command: eval $(cat example.env | grep -E -v "DATABASE_URL|GOOGLE_MAPS_GEOCODING_API_KEY" | sed 's/^/export /'); npm run test
 
 workflows:
   test:

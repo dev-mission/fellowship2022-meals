@@ -1,10 +1,11 @@
-import { set } from 'lodash';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../AuthContext';
 
-import './Sites.scss';
 import Api from '../Api';
+import { Map, Marker } from '../Components/Map';
+
+import './Sites.scss';
 
 import SiteItem from './SiteItem';
 
@@ -87,6 +88,18 @@ function Sites() {
       setStatuses(response.data);
     });
   }, []);
+
+  function onMarkerClick(event, marker, map, infoWindow) {
+    infoWindow.close();
+    infoWindow.setContent(`
+      <h3>${marker.site?.name}</h3>
+      <p>${marker.site?.address}</p>
+    `);
+    infoWindow.open({
+      anchor: marker,
+      map,
+    });
+  }
 
   function onFilterClick(type, value) {
     const newFilters = { ...filters };
@@ -250,6 +263,25 @@ function Sites() {
               <SiteItem data={site} />
             </div>
           ))}
+        <div className="row">
+          <div className="col-md-4">
+            {filteredData &&
+              filteredData.map((site) => (
+                <div>
+                  <SiteItem data={site} />
+                </div>
+              ))}
+          </div>
+          <div className="col-md-8">
+            <Map apiKey={window.env.REACT_APP_GOOGLE_MAPS_API_KEY} id="map" center={{ lat: 37.7749, lng: -122.4194 }} zoom={14}>
+              {filteredData
+                ?.filter((site) => site.lat && site.lng)
+                .map((site) => (
+                  <Marker key={`marker-${site.id}`} site={site} onClick={onMarkerClick} position={{ lat: site.lat, lng: site.lng }} />
+                ))}
+            </Map>
+          </div>
+        </div>
       </div>
     </div>
   );

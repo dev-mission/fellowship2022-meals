@@ -15,7 +15,7 @@ describe('models.Site', () => {
   it('creates a new Site record', async () => {
     let newSite = models.Site.build({
       name: 'testName',
-      address: '123 testing st',
+      address: '360 Valencia St, San Franciso, CA 94103',
       phoneNumber: '',
       email: 'testing@gmail.com',
     });
@@ -26,9 +26,19 @@ describe('models.Site', () => {
 
     site = await models.Site.findByPk(newSite.id);
     assert.deepStrictEqual(site.name, 'testName');
-    assert.deepStrictEqual(site.address, '123 testing st');
+    assert.deepStrictEqual(site.address, '360 Valencia St, San Franciso, CA 94103');
+    assert.deepStrictEqual(site.lat, 37.7672783);
+    assert.deepStrictEqual(site.lng, -122.4222935);
     assert.deepStrictEqual(site.phoneNumber, '');
     assert.deepStrictEqual(site.email, 'testing@gmail.com');
+  });
+
+  it('updates lat/lng after an address update', async () => {
+    const site = await models.Site.findByPk(1);
+    await site.update({ address: '360 Valencia St, San Franciso, CA 94103' });
+    await site.reload();
+    assert.deepStrictEqual(site.lat, 37.7672783);
+    assert.deepStrictEqual(site.lng, -122.4222935);
   });
 
   it('validates required fields', async () => {
