@@ -16,6 +16,9 @@ import Footer from './Footer';
 import PartnersForm from './Admin/PartnersForm';
 import NutritionPartners from './NutritionPartners/NutritionPartners';
 import PopulationsForm from './Admin/PopulationsForm';
+import MealTypesForm from './Admin/MealTypesForm';
+import ServicesForm from './Admin/ServicesForm';
+import StatusesForm from './Admin/StatusesForm';
 
 function App() {
   return (
@@ -82,6 +85,54 @@ function App() {
             element={
               <AuthProtected isAdminRequired={true}>
                 <PopulationsForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/mealtypes/new"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <MealTypesForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/mealtypes/:id/edit"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <MealTypesForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/services/new"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <ServicesForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/services/:id/edit"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <ServicesForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/statuses/new"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <StatusesForm />
+              </AuthProtected>
+            }
+          />
+          <Route
+            path="/statuses/:id/edit"
+            element={
+              <AuthProtected isAdminRequired={true}>
+                <StatusesForm />
               </AuthProtected>
             }
           />

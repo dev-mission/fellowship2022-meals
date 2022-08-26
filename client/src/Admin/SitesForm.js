@@ -13,6 +13,9 @@ function SitesForm() {
   const { id } = useParams();
   const [partners, setPartners] = useState(null);
   const [populations, setPopulations] = useState(null);
+  const [mealtypes, setMealTypes] = useState(null);
+  const [services, setServices] = useState(null);
+  const [statuses, setStatuses] = useState(null);
   const [data, setData] = useState({
     name: '',
     address: '',
@@ -22,6 +25,9 @@ function SitesForm() {
     NutritionPartnerIds: [],
     Hours: [],
     PopulationIds: [],
+    MealTypeIds: [],
+    ServiceIds: [],
+    CovidStatusIds: [],
   });
   const [hour, setHour] = useState({
     day: 0,
@@ -36,7 +42,11 @@ function SitesForm() {
         const { data } = response;
         data.NutritionPartnerIds = data.NutritionPartners?.map((np) => np.id);
         data.PopulationIds = data.Populations?.map((p) => p.id);
+        data.MealTypeIds = data.MealTypes?.map((mt) => mt.id);
+        data.ServiceIds = data.Services?.map((s) => s.id);
+        data.CovidStatusIds = data.CovidStatuses.map((cs) => cs.id);
         data.Hours = [];
+        console.log(data);
         setData(data);
       });
     }
@@ -49,8 +59,26 @@ function SitesForm() {
   }, []);
 
   useEffect(() => {
+    Api.mealtypes.getall().then((response) => {
+      setMealTypes(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
     Api.populations.getall().then((response) => {
       setPopulations(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    Api.services.getall().then((response) => {
+      setServices(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    Api.statuses.getall().then((response) => {
+      setStatuses(response.data);
     });
   }, []);
 
@@ -281,6 +309,102 @@ function SitesForm() {
                   <Link style={{ textDecoration: 'none', width: 'fit' }} to="/populations/new">
                     <i className="fa fa-plus phone" style={{ marginRight: 12 }} aria-hidden="true"></i>
                     Add Population
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Meal Types</label>
+              <div className="mealtype-container">
+                <div>
+                  {mealtypes?.map((mealtype) => (
+                    <div key={`mealtype-${id}`} className="form-check">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id={`mealtype-${mealtype.id}`}
+                        name="MealTypeIds"
+                        value={mealtype.id}
+                        onChange={updateAssociation}
+                        checked={data.MealTypeIds.includes(mealtype.id)}
+                      />
+                      <div className="form-check-label" htmlFor={`mealtype-${mealtype.id}`}>
+                        {mealtype.name}
+                        <Link className="edit" to={'/mealtypes/' + mealtype.id + '/edit'}>
+                          <i className="fa fa-pencil "></i> edit
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="button">
+                  <Link style={{ textDecoration: 'none', width: 'fit' }} to="/mealtypes/new">
+                    <i className="fa fa-plus phone" style={{ marginRight: 12 }} aria-hidden="true"></i>
+                    Add Meal Type
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Services</label>
+              <div className="service-container">
+                <div>
+                  {services?.map((service) => (
+                    <div key={`service-${id}`} className="form-check">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id={`service-${service.id}`}
+                        name="ServiceIds"
+                        value={service.id}
+                        onChange={updateAssociation}
+                        checked={data.ServiceIds.includes(service.id)}
+                      />
+                      <div className="form-check-label" htmlFor={`service-${service.id}`}>
+                        {service.name}
+                        <Link className="edit" to={'/services/' + service.id + '/edit'}>
+                          <i className="fa fa-pencil "></i> edit
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="button">
+                  <Link style={{ textDecoration: 'none', width: 'fit' }} to="/services/new">
+                    <i className="fa fa-plus phone" style={{ marginRight: 12 }} aria-hidden="true"></i>
+                    Add Service
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Statuses</label>
+              <div className="status-container">
+                <div>
+                  {statuses?.map((status) => (
+                    <div key={`status-${id}`} className="form-check">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id={`status-${status.id}`}
+                        name="CovidStatusIds"
+                        value={status.id}
+                        onChange={updateAssociation}
+                        checked={data.CovidStatusIds.includes(status.id)}
+                      />
+                      <div className="form-check-label" htmlFor={`status-${status.id}`}>
+                        {status.name}
+                        <Link className="edit" to={'/statuses/' + status.id + '/edit'}>
+                          <i className="fa fa-pencil "></i> edit
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="button">
+                  <Link style={{ textDecoration: 'none', width: 'fit' }} to="/statuses/new">
+                    <i className="fa fa-plus phone" style={{ marginRight: 12 }} aria-hidden="true"></i>
+                    Add Status
                   </Link>
                 </div>
               </div>

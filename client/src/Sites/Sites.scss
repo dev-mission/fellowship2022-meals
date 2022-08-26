@@ -59,8 +59,20 @@
       margin-right: 30px;
     }
 
-    button {
-      // width: fit-content;
+    .filter-button {
+      margin: 0 10px;
+
+      button {
+        width: inherit;
+      }
+
+      .dropdown-menu {
+        // width: 200px;
+
+        .dropdown-item {
+          width: inherit;
+        }
+      }
     }
   }
 }
