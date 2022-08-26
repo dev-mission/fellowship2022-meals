@@ -1,4 +1,5 @@
 import './Home.scss';
+import Sites from './Sites/Sites';
 
 function Home() {
   return (
@@ -16,6 +17,7 @@ function Home() {
           <button>No</button>
         </div>
       </div>
+      <Sites />
     </main>
   );
 }

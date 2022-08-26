@@ -1,6 +1,7 @@
 main {
   font-family: Arial, Helvetica, sans-serif;
   .image-backdrop {
+    background: #0f2549;
     padding: 2%;
     .Heading {
       background: #f9f9f9;
@@ -36,11 +37,80 @@ main {
     }
   }
 
+  .map {
+    margin: 80px;
+    padding: 0 20%;
+    // max-width: 768px;
+    // max-height: 400px;
+    .marker {
+      width: 300px;
+      height: max-content;
+      padding: 20px 19px;
+
+      .marker-header {
+        font-weight: 400;
+        font-size: 24px;
+        letter-spacing: 0.4px;
+        line-height: 1.25;
+
+        margin-bottom: 10px;
+      }
+
+      a {
+        color: #037493;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #00c7cc;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .phone-number {
+        font-weight: 400;
+        letter-spacing: 0.1px;
+        color: #037493;
+        text-decoration: none;
+
+        width: fit-content;
+        .phone {
+          margin-right: 8px;
+        }
+        a {
+          color: inherit;
+          text-decoration: inherit;
+        }
+      }
+
+      .phone-number:hover {
+        color: #00c7cc;
+        text-decoration: underline;
+      }
+
+      .button {
+        width: 100%;
+        padding: 18px 35px;
+
+        background: #037493;
+        color: #fff;
+        border-radius: 25px;
+        border: none;
+        text-decoration: none;
+      }
+
+      .button:hover {
+        background-color: #0f2549;
+        text-decoration: none;
+        color: #fff;
+      }
+    }
+  }
+
   .main-content {
-    padding: 80px 10%;
-    display: flex;
+    padding: 0 10% 80px 10%;
     width: 100%;
-    justify-content: space-around;
+    // display: flex;
+    // justify-content: space-around;
 
     .address-container {
       display: flex;
@@ -53,7 +123,7 @@ main {
         margin-right: 20px;
       }
 
-      button {
+      a {
         width: fit-content;
         height: fit-content;
         padding: 14px 35px;
@@ -71,12 +141,6 @@ main {
 
     .contact-info {
       font-size: 16px;
-      .title {
-        color: #037493;
-        font-size: 24px;
-        line-height: 24px;
-        margin-bottom: 11px;
-      }
     }
 
     .link {
@@ -87,6 +151,13 @@ main {
     .link:hover {
       color: #00c7cc;
       text-decoration: underline;
+    }
+
+    .title {
+      color: #037493;
+      font-size: 24px;
+      line-height: 24px;
+      margin-bottom: 11px;
     }
   }
 }
