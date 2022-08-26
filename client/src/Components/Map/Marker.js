@@ -4,14 +4,12 @@ function Marker(options) {
   const [marker, setMarker] = useState();
 
   useEffect(() => {
-    let newMarker;
     if (!marker) {
-      newMarker = new window.google.maps.Marker();
-      setMarker(newMarker);
+      setMarker(new window.google.maps.Marker());
     }
     return () => {
-      if (newMarker) {
-        newMarker.setMap(null);
+      if (marker) {
+        marker.setMap(null);
       }
     };
   }, [marker]);
