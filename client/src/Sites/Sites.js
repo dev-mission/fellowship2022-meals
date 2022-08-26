@@ -18,6 +18,10 @@ function Sites() {
   const [services, setServices] = useState(null);
   const [statuses, setStatuses] = useState(null);
 
+  const [filters, setFilters] = useState({
+    populationId: null,
+  });
+
   useEffect(() => {
     fetch(`/api/sites`)
       .then((response) => {
@@ -80,6 +84,21 @@ function Sites() {
     });
   }, []);
 
+  function onFilterClick(type, value) {
+    const newFilters = { ...filters };
+    if (newFilters[type] === value) {
+      newFilters[type] = null;
+    } else {
+      newFilters[type] = value;
+    }
+    setFilters(newFilters);
+  }
+
+  let filteredData = data;
+  if (filters.populationId) {
+    filteredData = filteredData.filter((site) => site.Populations.find((p) => p.id === filters.populationId));
+  }
+
   return (
     <div className="sites">
       <div className="line"></div>
@@ -124,7 +143,8 @@ function Sites() {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {populations?.map((population) => (
-              <a class="dropdown-item" href="#">
+              <a onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item" href="#">
+                {filters.populationId === population.id && <span>*</span>}
                 {population.name}
               </a>
             ))}
@@ -186,8 +206,8 @@ function Sites() {
         </div>
       </div>
       <div className="sites-list">
-        {data &&
-          data.map((site) => (
+        {filteredData &&
+          filteredData.map((site) => (
             <div>
               <SiteItem data={site} />
             </div>
