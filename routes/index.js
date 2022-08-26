@@ -5,10 +5,10 @@ const path = require('path');
 const router = express.Router();
 
 /// configure serving up a built client app
-router.use(express.static(path.join(__dirname, '../client/build')));
+router.use(express.static(path.join(__dirname, '../client/build'), { index: false }));
 
 /// configure serving any static file in public folder
-router.use(express.static(path.join(__dirname, '../public')));
+router.use(express.static(path.join(__dirname, '../public'), { index: false }));
 
 /// serve libraries installed as node modules
 router.use('/libraries/bootstrap', express.static(path.join(__dirname, '../client/node_modules/bootstrap/dist')));
