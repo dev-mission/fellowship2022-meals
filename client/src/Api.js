@@ -90,6 +90,76 @@ const Api = {
       return instance.delete(`/api/nutritionpartners/${id}`);
     },
   },
+  populations: {
+    getall() {
+      return instance.get('/api/populations');
+    },
+    get(id) {
+      return instance.get(`/api/populations/${id}`);
+    },
+    create(data) {
+      return instance.post('/api/populations/', data);
+    },
+    update(id, data) {
+      return instance.patch(`/api/populations/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/populations/${id}`);
+    },
+  },
+  mealtypes: {
+    getall() {
+      return instance.get('/api/mealtypes');
+    },
+    get(id) {
+      return instance.get(`/api/mealtypes/${id}`);
+    },
+    create(data) {
+      return instance.post('/api/mealtypes/', data);
+    },
+    update(id, data) {
+      return instance.patch(`/api/mealtypes/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/mealtypes/${id}`);
+    },
+  },
+
+  services: {
+    getall() {
+      return instance.get('/api/services');
+    },
+    get(id) {
+      return instance.get(`/api/services/${id}`);
+    },
+    create(data) {
+      return instance.post('/api/services/', data);
+    },
+    update(id, data) {
+      return instance.patch(`/api/services/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/services/${id}`);
+    },
+  },
+
+  statuses: {
+    getall() {
+      return instance.get('/api/covidstatuses');
+    },
+    get(id) {
+      return instance.get(`/api/covidstatuses/${id}`);
+    },
+    create(data) {
+      return instance.post('/api/covidstatuses/', data);
+    },
+    update(id, data) {
+      return instance.patch(`/api/covidstatuses/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/covidstatuses/${id}`);
+    },
+  },
 };
 
 export default Api;

@@ -45,4 +45,52 @@
     background-color: #f4f4f4;
     cursor: pointer;
   }
+
+  .filter {
+    display: flex;
+    align-items: center;
+    margin: 0 50px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    .filter-text {
+      font-weight: bold;
+      margin-right: 30px;
+    }
+
+    .filter-button {
+      margin: 0 10px;
+
+      button {
+        width: inherit;
+      }
+
+      .dropdown-menu {
+        // width: 200px;
+
+        .dropdown-item {
+          width: inherit;
+        }
+      }
+    }
+
+    .reset-button {
+      width: fit-content;
+      height: fit-content;
+      padding: 6px 20px;
+      margin: 0 10px;
+
+      background: #037493;
+      color: #fff;
+      border-radius: 25px;
+      text-decoration: none;
+      border: none;
+    }
+
+    .reset-button:hover {
+      background-color: #0f2549;
+      cursor: pointer;
+    }
+  }
 }

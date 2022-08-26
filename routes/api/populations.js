@@ -16,9 +16,9 @@ router.get('/', async (req, res) => {
 
 // Get a population by id
 router.get('/:id', async (req, res) => {
-  const populations = await models.Population.findByPk(req.params.id);
-  if (populations) {
-    res.json(record.toJSON());
+  const population = await models.Population.findByPk(req.params.id);
+  if (population) {
+    res.json(population.toJSON());
   } else {
     res.status(HttpStatus.NOT_FOUND).end();
   }

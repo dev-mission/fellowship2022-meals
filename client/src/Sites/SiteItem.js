@@ -7,7 +7,7 @@ import Api from '../Api';
 
 function SiteItem({ data }) {
   const { user, setUser } = useAuthContext();
-  const { id, name, address, phoneNumber, email } = data;
+  const { id, name, address, phoneNumber, email, Populations } = data;
 
   useEffect(
     function () {
@@ -29,14 +29,22 @@ function SiteItem({ data }) {
   return (
     <div className="site-item">
       <div>
-        <div className="site-name">{name}</div>
+        <Link to={'/sites/' + id} style={{ textDecoration: 'none' }}>
+          <div className="site-name">{name}</div>
+        </Link>
         <div className="site-address">{address}</div>
         <div className="site-phone-number">
           <i className="fa fa-phone fa-lg phone" aria-hidden="true"></i>
-          {number}
+          <a href={'tel:' + number}>{number}</a>
         </div>
         <div className="population">
-          Includes: <span>testing</span>
+          Serves:{' '}
+          {Populations.map((population) => (
+            <span>
+              {population.name}
+              {Populations[Populations.length - 1] != population && ' | '}
+            </span>
+          ))}
         </div>
       </div>
       {user?.isAdmin && (
