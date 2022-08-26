@@ -39,7 +39,7 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
         await record.setMealTypes(req.body.MealTypeIds ?? [], { transaction });
         await record.setServices(req.body.ServiceIds ?? [], { transaction });
         await record.setCovidStatuses(req.body.CovidStatusIds ?? [], { transaction });
-        await record.setHours(req.body.Hours ?? [], { transaction });
+        // await record.setHours(req.body.Hours ?? [], { transaction });
       }
     });
     res.status(HttpStatus.CREATED).json(record.toJSON());

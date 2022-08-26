@@ -163,7 +163,7 @@ function Site() {
               )}
             </div>
             <div className="col-md-4">
-              <div className="title">Address</div>
+              <div className="title">Hours</div>
             </div>
           </div>
         </div>
