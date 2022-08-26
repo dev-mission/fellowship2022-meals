@@ -21,10 +21,13 @@ function SiteItem({ data }) {
     },
     [setUser]
   );
+  let number = '';
 
-  let match = phoneNumber.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (phoneNumber) {
+    let match = phoneNumber.match(/^(\d{3})(\d{3})(\d{4})$/);
 
-  let number = '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    number = '(' + match[1] + ') ' + match[2] + '-' + match[3];
+  }
 
   return (
     <div className="site-item">
@@ -33,10 +36,12 @@ function SiteItem({ data }) {
           <div className="site-name">{name}</div>
         </Link>
         <div className="site-address">{address}</div>
-        <div className="site-phone-number">
-          <i className="fa fa-phone fa-lg phone" aria-hidden="true"></i>
-          <a href={'tel:' + number}>{number}</a>
-        </div>
+        {phoneNumber && (
+          <div className="site-phone-number">
+            <i className="fa fa-phone fa-lg phone" aria-hidden="true"></i>
+            <a href={'tel:' + number}>{number}</a>
+          </div>
+        )}
         <div className="population">
           Serves:{' '}
           {Populations.map((population) => (
@@ -48,7 +53,7 @@ function SiteItem({ data }) {
         </div>
       </div>
       {user?.isAdmin && (
-        <Link className="edit" to={id + '/edit'}>
+        <Link className="edit" to={'/sites/' + id + '/edit'}>
           <i className="fa fa-pencil fa-lg"></i> edit
         </Link>
       )}
