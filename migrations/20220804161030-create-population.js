@@ -20,10 +20,6 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-<<<<<<< HEAD:migrations/20220805002353-create-population.js
-
-=======
->>>>>>> main:migrations/20220804161030-create-population.js
     // set starting id to larger value so it doesn't conflict with test fixtures
     await queryInterface.sequelize.query('ALTER SEQUENCE "Populations_id_seq" RESTART WITH 100;');
   },

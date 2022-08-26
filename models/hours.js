@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Hours.init(
     {
-      // SiteId: DataTypes.INTEGER,
       day: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -40,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TIME,
         allowNull: false,
       },
-      type: DataTypes.STRING,
     },
     {
       sequelize,
