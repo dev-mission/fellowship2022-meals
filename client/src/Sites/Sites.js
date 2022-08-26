@@ -167,7 +167,7 @@ function Sites() {
       <div className="line"></div>
       <div className="heading">Locations</div>
       {user?.isAdmin && (
-        <Link style={{ textDecoration: 'none' }} to="new">
+        <Link style={{ textDecoration: 'none' }} to="/sites/new">
           <div className="add-site">
             <i className="fa fa-plus fa-lg phone" aria-hidden="true"></i>
             Add new site
