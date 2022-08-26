@@ -10,14 +10,16 @@ const router = express.Router();
 
 // Get all sites
 router.get('/', async (req, res) => {
-  const allSite = await models.Site.findAll();
+  const allSite = await models.Site.findAll({
+    include: [models.NutritionPartner, models.Population, models.MealType, models.Service, models.CovidStatus, models.Hours],
+  });
   res.json(allSite.map((r) => r.toJSON()));
 });
 
 // Get a site by id
 router.get('/:id', async (req, res) => {
   const site = await models.Site.findByPk(req.params.id, {
-    include: [models.NutritionPartner],
+    include: [models.NutritionPartner, models.Population, models.MealType, models.Service, models.CovidStatus, models.Hours],
   });
   if (site) {
     res.json(site.toJSON());
@@ -33,6 +35,11 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
       record = await models.Site.create(_.pick(req.body, ['name', 'address', 'phoneNumber', 'email', 'website']), { transaction });
       if (record) {
         await record.setNutritionPartners(req.body.NutritionPartnerIds ?? [], { transaction });
+        await record.setPopulations(req.body.PopulationIds ?? [], { transaction });
+        await record.setMealTypes(req.body.MealTypeIds ?? [], { transaction });
+        await record.setServices(req.body.ServiceIds ?? [], { transaction });
+        await record.setCovidStatuses(req.body.CovidStatusIds ?? [], { transaction });
+        await record.setHours(req.body.Hours ?? [], { transaction });
       }
     });
     res.status(HttpStatus.CREATED).json(record.toJSON());
@@ -56,6 +63,11 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
       if (record) {
         await record.update(_.pick(req.body, ['name', 'address', 'phoneNumber', 'email', 'website']), { transaction });
         await record.setNutritionPartners(req.body.NutritionPartnerIds ?? [], { transaction });
+        await record.setPopulations(req.body.PopulationIds ?? [], { transaction });
+        await record.setMealTypes(req.body.MealTypeIds ?? [], { transaction });
+        await record.setServices(req.body.ServiceIds ?? [], { transaction });
+        await record.setCovidStatuses(req.body.CovidStatusIds ?? [], { transaction });
+        await record.setHours(req.body.Hours ?? [], { transaction });
       }
     });
     if (record) {

@@ -36,6 +36,10 @@
     .phone {
       margin-right: 8px;
     }
+    a {
+      color: inherit;
+      text-decoration: inherit;
+    }
   }
 
   .site-phone-number:hover {
@@ -52,11 +56,6 @@
     span {
       color: #5d6063;
       border-bottom: 1px dashed #00aecd;
-    }
-
-    span:hover {
-      border-bottom: 1px solid #00aecd;
-      cursor: pointer;
     }
   }
 
