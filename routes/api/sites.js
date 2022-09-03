@@ -39,7 +39,10 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
         await record.setMealTypes(req.body.MealTypeIds ?? [], { transaction });
         await record.setServices(req.body.ServiceIds ?? [], { transaction });
         await record.setCovidStatuses(req.body.CovidStatusIds ?? [], { transaction });
-        await record.setHours(req.body.Hours ?? [], { transaction });
+        // create new Hours instances
+        const hours = req.body.Hours ?? [];
+        hours.forEach((h) => (h.SiteId = record.id));
+        await models.Hours.bulkCreate(hours, { transaction });
       }
     });
     res.status(HttpStatus.CREATED).json(record.toJSON());
@@ -67,7 +70,11 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
         await record.setMealTypes(req.body.MealTypeIds ?? [], { transaction });
         await record.setServices(req.body.ServiceIds ?? [], { transaction });
         await record.setCovidStatuses(req.body.CovidStatusIds ?? [], { transaction });
-        await record.setHours(req.body.Hours ?? [], { transaction });
+        // to simplify, we brute-force delete and re-create all Hours
+        await models.Hours.destroy({ where: { SiteId: record.id } }, { transaction });
+        const hours = req.body.Hours ?? [];
+        hours.forEach((h) => (h.SiteId = record.id));
+        await models.Hours.bulkCreate(hours, { transaction });
       }
     });
     if (record) {
