@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAuthContext } from '../AuthContext';
 import { Link } from 'react-router-dom';
+import { DateTime, Info } from 'luxon';
 
 import Api from '../Api';
 import './SitesForm.scss';
-import { doc } from 'prettier';
+
+function hoursComparator(a, b) {
+  if (a.day === b.day) {
+    return a.open.localeCompare(b.open);
+  }
+  return a.day - b.day;
+}
 
 function SitesForm() {
   const navigate = useNavigate();
-  const user = useAuthContext();
   const { id } = useParams();
   const [partners, setPartners] = useState(null);
   const [populations, setPopulations] = useState(null);
   const [mealtypes, setMealTypes] = useState(null);
   const [services, setServices] = useState(null);
   const [statuses, setStatuses] = useState(null);
-  // const [hours, setHours] = useState(null);
   const [data, setData] = useState({
     name: '',
     address: '',
@@ -32,8 +36,8 @@ function SitesForm() {
   });
   const [hour, setHour] = useState({
     day: 0,
-    open: '12:00',
-    close: '12:00',
+    open: '09:00',
+    close: '17:00',
     type: '',
   });
 
@@ -46,7 +50,7 @@ function SitesForm() {
         data.MealTypeIds = data.MealTypes?.map((mt) => mt.id);
         data.ServiceIds = data.Services?.map((s) => s.id);
         data.CovidStatusIds = data.CovidStatuses.map((cs) => cs.id);
-        console.log(data);
+        data.Hours.sort(hoursComparator);
         setData(data);
       });
     }
@@ -130,59 +134,29 @@ function SitesForm() {
   }
 
   function updateHourList(event) {
-    let openElement = document.getElementById('open');
-    let closeElement = document.getElementById('close');
-    let dayElement = document.getElementById('day');
-    let hourList = document.getElementById('time-list');
-
-    let openSplit = hour['open'].split(':');
-    let closeSplit = hour['close'].split(':');
-
-    hourList.innerHTML += `<div class="time-interval">
-      <label>${dayElement.value}</label> <span class="time">${openSplit[0] % 12 || 12}:${openSplit[1]} ${
-      openSplit[0] >= 12 ? 'pm' : 'am'
-    } - ${closeSplit[0] % 12 || 12}:${closeSplit[1]} ${closeSplit[0] >= 12 ? 'pm' : 'am'}</span> <span class="remove-button" id="${
-      data['Hours'].length
-    }"> Remove</span>
-    </div>`;
-    var buttons = document.getElementsByClassName('remove-button');
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].onclick = onRemoveHour;
-    }
-
     const newData = { ...data };
     newData['Hours'].push(hour);
+    newData['Hours'].sort(hoursComparator);
     setData(newData);
-    console.log(data);
-
-    openElement.value = openElement.defaultValue;
-    closeElement.value = closeElement.defaultValue;
-    dayElement.selectedIndex = 0;
 
     setHour({
       day: 0,
-      open: '12:00',
-      close: '12:00',
+      open: '09:00',
+      close: '17:00',
       type: '',
     });
   }
 
   function onHourChange(event) {
     const newHour = { ...hour };
-    if (event.target.name == 'day') {
-      newHour[event.target.name] = event.target.selectedIndex;
-    } else {
-      newHour[event.target.name] = event.target.value;
-    }
+    newHour[event.target.name] = event.target.value;
     setHour(newHour);
   }
 
-  function onRemoveHour(event) {
+  function onRemoveHours(index) {
     const newData = { ...data };
-    newData['Hours'].splice(event.target.id, 1);
-    event.target.parentElement.remove();
+    newData['Hours'].splice(index, 1);
     setData(newData);
-    console.log(newData);
   }
 
   return (
@@ -262,20 +236,32 @@ function SitesForm() {
             </div>
             <div className="mb-3">
               <label className="form-label">Hours</label>
-              <div className="time-list" id="time-list"></div>
-              <div onChange={onHourChange}>
-                <select size="1" id="day" name="day">
-                  <option>Sun</option>
-                  <option>Mon</option>
-                  <option>Tue</option>
-                  <option>Wed</option>
-                  <option>Thu</option>
-                  <option>Fri</option>
-                  <option>Sat</option>
+              <div className="time-list" id="time-list">
+                {data.Hours.map((hours, index) => (
+                  <div key={`hours-${index}`} className="time-interval">
+                    <label>{Info.weekdays('short')[(parseInt(hours.day) + 6) % 7]}</label>
+                    <span className="time">
+                      {DateTime.fromFormat(hours.open, 'H:mm').toLocaleString(DateTime.TIME_SIMPLE)} -{' '}
+                      {DateTime.fromFormat(hours.close, 'H:mm').toLocaleString(DateTime.TIME_SIMPLE)}
+                    </span>
+                    <span className="remove-button" onClick={() => onRemoveHours(index)}>
+                      Remove
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <select size="1" id="day" name="day" value={hour.day} onChange={onHourChange}>
+                  <option value={0}>Sun</option>
+                  <option value={1}>Mon</option>
+                  <option value={2}>Tue</option>
+                  <option value={3}>Wed</option>
+                  <option value={4}>Thu</option>
+                  <option value={5}>Fri</option>
+                  <option value={6}>Sat</option>
                 </select>
-
-                <input type="time" name="open" id="open" defaultValue="12:00"></input>
-                <input type="time" name="close" id="close" defaultValue="12:00"></input>
+                <input type="time" name="open" id="open" value={hour.open} onChange={onHourChange}></input>
+                <input type="time" name="close" id="close" value={hour.close} onChange={onHourChange}></input>
                 <span className="add-hours" onClick={updateHourList}>
                   Add Hours
                 </span>
@@ -286,7 +272,7 @@ function SitesForm() {
               <div className="population-container">
                 <div>
                   {populations?.map((population) => (
-                    <div key={`population-${id}`} className="form-check">
+                    <div key={`population-${population.id}`} className="form-check">
                       <input
                         type="checkbox"
                         className="form-check-input"

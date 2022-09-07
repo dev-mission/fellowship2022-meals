@@ -1,4 +1,5 @@
 const { Client } = require('@googlemaps/google-maps-services-js');
+const _ = require('lodash');
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -16,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       Site.belongsToMany(models.Population, { through: models.SitePopulation });
       Site.belongsToMany(models.Service, { through: models.SiteService });
       Site.hasMany(models.Hours);
+    }
+
+    toJSON() {
+      const data = this.get();
+      return data;
     }
   }
 

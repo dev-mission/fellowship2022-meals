@@ -1,5 +1,6 @@
-'use strict';
+const _ = require('lodash');
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Hours extends Model {
     /**
@@ -10,6 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Hours.belongsTo(models.Site);
+    }
+
+    toJSON() {
+      const data = _.pick(this.get(), ['day', 'open', 'close', 'type']);
+      data.open = data.open?.match(/(\d+:\d+):\d+/)[1];
+      data.close = data.close?.match(/(\d+:\d+):\d+/)[1];
+      return data;
     }
   }
   Hours.init(
