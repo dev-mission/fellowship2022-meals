@@ -66,8 +66,10 @@
       }
 
       .button {
-        width: 100%;
+        display: block;
+        width: fit-content;
         padding: 18px 35px;
+        margin: 20px auto 0;
 
         background: #037493;
         color: #fff;

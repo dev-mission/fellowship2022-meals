@@ -7,6 +7,7 @@ import { Map, Marker } from '../Components/Map';
 import Api from '../Api';
 import './Site.scss';
 import { map } from 'lodash';
+import { DateTime, Info } from 'luxon';
 
 function Site() {
   const { id } = useParams();
@@ -164,6 +165,15 @@ function Site() {
             </div>
             <div className="col-md-4">
               <div className="title">Hours</div>
+              {data.Hours?.map((hours) => (
+                <div className="time-interval">
+                  <label>{Info.weekdays('short')[(parseInt(hours.day) + 6) % 7]}</label>
+                  <span className="time">
+                    {DateTime.fromFormat(hours.open, 'H:mm').toLocaleString(DateTime.TIME_SIMPLE)} -{' '}
+                    {DateTime.fromFormat(hours.close, 'H:mm').toLocaleString(DateTime.TIME_SIMPLE)}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
