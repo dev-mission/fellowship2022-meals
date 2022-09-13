@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../AuthContext';
+import { DateTime, Info } from 'luxon';
 
 import Api from '../Api';
 import { Map, Marker } from '../Components/Map';
@@ -110,8 +111,6 @@ function Sites() {
           Serves:
             ${marker.site?.Populations.map((population) => population.name)}
         </div>
-        <br>
-        <br>
         <a class="button" href="${'/sites/' + marker.site?.id}">SEE LOCATION DETAILS</a>
       <div>
     `);
