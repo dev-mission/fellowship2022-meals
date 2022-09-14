@@ -174,106 +174,115 @@ function Sites() {
         </Link>
       )}
       <div className="filter">
-        <div className="filter-text">Filter</div>
-        <div className="filter-button">
-          <button
-            class="btn filter-button dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            Nutrition Partner
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {partners?.map((partner) => (
-              <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item">
-                {filters.nutritionPartnerId === partner.id && <span>*</span>}
-                {partner.name}
-              </div>
-            ))}
+        <div className="filter-options">
+          <div className="filter-text">Filter</div>
+          <div className="filter-button">
+            <button
+              class="btn filter-button dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style={filters.nutritionPartnerId && { border: '1px solid #037493' }}>
+              {(filters.nutritionPartnerId && partners?.map((partner) => filters.nutritionPartnerId === partner.id && partner.name)) ||
+                'Nutrition Partner'}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {partners?.map((partner) => (
+                <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item">
+                  {filters.nutritionPartnerId === partner.id && <span>*</span>}
+                  {partner.name}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="filter-button">
-          <button
-            class="btn filter-button dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            Population
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {populations?.map((population) => (
-              <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item">
-                {filters.populationId === population.id && <span>*</span>}
-                {population.name}
-              </div>
-            ))}
+          <div className="filter-button">
+            <button
+              class="btn filter-button dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style={filters.populationId && { border: '1px solid #037493' }}>
+              {(filters.populationId && populations?.map((population) => filters.populationId === population.id && population.name)) ||
+                'Population'}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {populations?.map((population) => (
+                <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item">
+                  {filters.populationId === population.id && <span>*</span>}
+                  {population.name}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="filter-button">
-          <button
-            class="btn filter-button dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            Meal Type
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {mealtypes?.map((mealtype) => (
-              <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item">
-                {filters.mealTypeId === mealtype.id && <span>*</span>}
-                {mealtype.name}
-              </div>
-            ))}
+          <div className="filter-button">
+            <button
+              class="btn filter-button dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style={filters.mealTypeId && { border: '1px solid #037493' }}>
+              {(filters.mealTypeId && mealtypes?.map((mealtype) => filters.mealTypeId === mealtype.id && mealtype.name)) || 'Meal Type'}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {mealtypes?.map((mealtype) => (
+                <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item">
+                  {filters.mealTypeId === mealtype.id && <span>*</span>}
+                  {mealtype.name}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="filter-button">
-          <button
-            class="btn filter-button dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            Services
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {services?.map((service) => (
-              <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item">
-                {filters.serviceId === service.id && <span>*</span>}
-                {service.name}
-              </div>
-            ))}
+          <div className="filter-button">
+            <button
+              class="btn filter-button dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style={filters.serviceId && { border: '1px solid #037493' }}>
+              {(filters.serviceId && services?.map((service) => filters.serviceId === service.id && service.name)) || 'Service'}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {services?.map((service) => (
+                <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item">
+                  {filters.serviceId === service.id && <span>*</span>}
+                  {service.name}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="filter-button">
-          <button
-            class="btn filter-button dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            Statuses
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {statuses?.map((status) => (
-              <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item">
-                {filters.statusId === status.id && <span>*</span>}
-                {status.name}
-              </div>
-            ))}
+          <div className="filter-button">
+            <button
+              class="btn filter-button dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style={filters.statusId && { border: '1px solid #037493' }}>
+              {(filters.statusId && statuses?.map((status) => filters.statusId === status.id && status.name)) || 'Status'}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {statuses?.map((status) => (
+                <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item">
+                  {filters.statusId === status.id && <span>*</span>}
+                  {status.name}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <button onClick={resetFilter} className="reset-button">
-          Reset
-        </button>
+          <button onClick={resetFilter} className="reset-button">
+            Reset
+          </button>
+        </div>
       </div>
       <div className="sites-list">
         {/* {filteredData &&
