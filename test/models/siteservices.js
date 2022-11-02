@@ -19,8 +19,4 @@ describe('models.SiteService', () => {
     assert.deepStrictEqual(test.SiteId, 1);
     assert.deepStrictEqual(test.ServiceId, 1);
   });
-
-  it('placeholder', async () => {
-    assert();
-  });
 });
