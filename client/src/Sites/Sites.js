@@ -93,7 +93,11 @@ function Sites() {
   function onMarkerClick(event, marker, map, infoWindow) {
     let match = marker.site?.phoneNumber.match(/^(\d{3})(\d{3})(\d{4})$/);
 
-    let number = '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    let number;
+
+    if (match) {
+      number = '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
 
     infoWindow.close();
     infoWindow.setContent(`

@@ -114,16 +114,19 @@ main {
 
     .address-container {
       display: flex;
-
       font-size: 20px;
-      text-decoration: underline;
       line-height: 20px;
 
       i {
         margin-right: 20px;
       }
 
+      .address-container-address {
+        text-decoration: underline;
+      }
+
       a {
+        display: block;
         width: fit-content;
         height: fit-content;
         padding: 14px 35px;
@@ -133,9 +136,11 @@ main {
         color: #fff;
         border-radius: 25px;
         text-decoration: none;
-        border: none;
 
         font-size: 13px;
+      }
+      a:hover {
+        background-color: #0f2549;
       }
     }
 

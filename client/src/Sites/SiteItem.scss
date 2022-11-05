@@ -1,7 +1,7 @@
 .site-item {
   display: flex;
   justify-content: space-between;
-  padding: 20px 40px;
+  padding: 20px 30px;
   align-items: center;
   border-bottom: 1px solid #eee;
   .site-name {
@@ -60,14 +60,18 @@
   }
 
   .edit {
-    width: fit-content;
+    width: 100px;
     height: fit-content;
-    padding: 8px 35px;
+    padding: 10px 30px;
 
     background: #037493;
     color: #fff;
     border-radius: 25px;
     text-decoration: none;
+  }
+
+  .edit > i {
+    width: max-content;
   }
 
   .edit:hover {
