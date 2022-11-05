@@ -125,9 +125,8 @@ function Site() {
               <div className="address-container col-md-4">
                 <i className="fa fa-map-o fa-lg"></i>
                 <div>
-                  <div>{data.address}</div>
+                  <div className="address-container-address">{data.address}</div>
 
-                  <br></br>
                   <a href={'https://maps.google.com/?q=' + data.address} target="_blank" rel="noreferrer">
                     GET DIRECTIONS
                   </a>
