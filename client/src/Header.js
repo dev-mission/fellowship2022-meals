@@ -52,6 +52,11 @@ function Header() {
                 Home
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" aria-current="page" to="/about">
+                About
+              </Link>
+            </li>
             <li className="nav-item active">
               <Link className="nav-link" aria-current="page" to="/sites">
                 Sites

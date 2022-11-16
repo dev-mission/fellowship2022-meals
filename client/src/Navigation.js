@@ -52,6 +52,11 @@ function Navigation() {
               </Link>
             </li>
             <li className="nav-item active">
+              <Link className="nav-link" aria-current="page" to="/about">
+                ABOUT
+              </Link>
+            </li>
+            <li className="nav-item active">
               <Link className="nav-link" aria-current="page" to="/sites">
                 LOCATIONS
               </Link>

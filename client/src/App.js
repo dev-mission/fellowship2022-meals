@@ -20,6 +20,7 @@ import MealTypesForm from './Admin/MealTypesForm';
 import ServicesForm from './Admin/ServicesForm';
 import StatusesForm from './Admin/StatusesForm';
 import Site from './Sites/Site';
+import About from './About';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/passwords/*" element={<PasswordRoutes />} />
+          <Route path="/about" element={<About />} />
           <Route path="/sites" element={<Sites />} />
           <Route path="/sites/:id" element={<Site />} />
           <Route path="/partners" element={<NutritionPartners />} />
