@@ -1,6 +1,6 @@
 .about {
   h1 {
-    font-size: 36px;
+    font-size: px;
     letter-spacing: 0.02em;
     text-align: center;
     margin-top: 55px;
@@ -37,14 +37,13 @@
 
     li {
       display: flex;
-      column-gap: 2rem;
-      margin-top: 1rem;
+      align-items: center;
+      column-gap: 3rem;
+      margin-top: 2rem;
 
       img {
-        height: 10rem;
-        border-radius: 25%;
-        border: 0.5px solid #037493;
-        padding: 0.5rem;
+        height: fit-content;
+        width: 15rem;
       }
 
       .text {
@@ -64,6 +63,10 @@
 
         h3 {
           color: #037493;
+        }
+
+        p {
+          color: #68717a;
         }
       }
     }

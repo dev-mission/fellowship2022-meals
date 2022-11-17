@@ -4,23 +4,23 @@ import './About.scss';
 function About() {
   const orgs = [
     {
+      name: 'San Francisco Human Services Agency',
+      website: 'https://www.sfhsa.org/',
+      logo: 'sfhsa-logo.png',
+      description:
+        'San Francisco Human Services Agency supports individuals, families, and communities with food, health care, financial, employment, child care, and protective services.',
+    },
+    {
       name: 'Dev/Mission',
       website: 'https://devmission.org/',
-      logo: 'https://devmission.org/wp-content/uploads/2017/04/cropped-Dev-Mission-Icon-JPG-192x192.jpg',
+      logo: 'devmission.png',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum fusce ut placerat orci nulla pellentesque dignissim enim. Vel turpis nunc eget lorem. Mauris vitae ultricies leo integer malesuada nunc vel risus. In tellus integer feugiat scelerisque. ',
+        'Dev/Mission has been connecting more than 260 low-income young adults to careers in Tech through post-secondary STEM careers and jobs in the tech industry as well as exposing K-12 to STEAM Activities. Dev/Mission provides STEM opportunities for untapped 6-24 year-olds San Francisco Bay Area youth. Our goal is to connect underserved populations to careers in technology by teaching programming, hardware, and critical career skills.',
     },
     {
       name: 'Code for San Francisco',
       website: 'https://www.codeforsanfrancisco.org/',
-      logo: 'https://pbs.twimg.com/profile_images/611647656331378688/Rf_FNiDA_400x400.jpg',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum fusce ut placerat orci nulla pellentesque dignissim enim. Vel turpis nunc eget lorem. Mauris vitae ultricies leo integer malesuada nunc vel risus. In tellus integer feugiat scelerisque. ',
-    },
-    {
-      name: 'San Francisco Human Services Agency',
-      website: 'https://www.sfhsa.org/',
-      logo: 'https://yt3.ggpht.com/ytc/AMLnZu8qyUA3uNu9sSWNX0MqVg8EUKHn8PD5jKSH7-KhyQ=s900-c-k-c0x00ffffff-no-rj',
+      logo: 'c4sf.png',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum fusce ut placerat orci nulla pellentesque dignissim enim. Vel turpis nunc eget lorem. Mauris vitae ultricies leo integer malesuada nunc vel risus. In tellus integer feugiat scelerisque. ',
     },
@@ -30,14 +30,14 @@ function About() {
     <main className="about">
       <h1>About SF Ready Meals</h1>
       <div className="description">
-        SFHSA's Congregate Meals Program offers nutritious, low-cost meals to seniors 60+ and adults with disabilities everyday at many
-        community dining sites throughout the city. In response to COVID-19, most sites offer takeout meals.
+        This congregate program serves nutritious meals at community dining centers across the City. Note: Due to COVID, many dining centers
+        may provide take-out meals only, or as an option with limited communal dining.
       </div>
       <ul>
         {orgs.map((org) => {
           return (
             <li>
-              <img src={org.logo}></img>
+              <img src={`${process.env.PUBLIC_URL}/${org.logo}`}></img>
               <div className="text">
                 <a href={org.website} target="_blank" rel="noreferrer">
                   <h3>{org.name}</h3>
