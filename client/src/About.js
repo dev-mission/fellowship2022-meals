@@ -22,7 +22,7 @@ function About() {
       website: 'https://www.codeforsanfrancisco.org/',
       logo: 'c4sf.png',
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum fusce ut placerat orci nulla pellentesque dignissim enim. Vel turpis nunc eget lorem. Mauris vitae ultricies leo integer malesuada nunc vel risus. In tellus integer feugiat scelerisque. ',
+        'Code for San Francisco is part of the Code for America Brigade Network. We are a welcoming and inclusive volunteer group of developers, designers, data geeks, and citizen activists who use creative technology to solve civic and social problems.',
     },
   ];
 
@@ -31,7 +31,8 @@ function About() {
       <h1>About SF Ready Meals</h1>
       <div className="description">
         This congregate program serves nutritious meals at community dining centers across the City. Note: Due to COVID, many dining centers
-        may provide take-out meals only, or as an option with limited communal dining.
+        may provide take-out meals only, or as an option with limited communal dining. This website is a collaboration of SFHSA, Dev/Mission
+        and Code for San Francisco.
       </div>
       <ul>
         {orgs.map((org) => {
