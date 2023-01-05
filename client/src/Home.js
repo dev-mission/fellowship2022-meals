@@ -1,14 +1,15 @@
 import './Home.scss';
 import Sites from './Sites/Sites';
 
+import { useTranslation } from 'react-i18next';
+
 function Home() {
+  const { t } = useTranslation();
+
   return (
     <main className="home">
-      <h1>SF Ready Meals</h1>
-      <div className="description">
-        SFHSA's Congregate Meals Program offers nutritious, low-cost meals to seniors 60+ and adults with disabilities everyday at many
-        community dining sites throughout the city. In response to COVID-19, most sites offer takeout meals.
-      </div>
+      <h1>{t('home.title')}</h1>
+      <div className="description">{t('home.description')}</div>
       <Sites />
     </main>
   );
