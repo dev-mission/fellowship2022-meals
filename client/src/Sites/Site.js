@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAuthContext } from '../AuthContext';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Map, Marker } from '../Components/Map';
+import { useTranslation } from 'react-i18next';
 
 import Api from '../Api';
 import './Site.scss';
-import { map } from 'lodash';
 import { DateTime, Info } from 'luxon';
 
 function Site() {
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (id) {
@@ -40,21 +39,25 @@ function Site() {
     infoWindow.setContent(`
       <div class="marker">
         <a class="marker-header" href="${'/sites/' + marker.site?.id}">${marker.site?.name}</a>
-        <p>${marker.site?.address} <a href="${
-      'https://maps.google.com/?q=' + marker.site?.address
-    }" target="_blank">Get Directions <i class="fa fa-location-arrow" aria-hidden="true"></i></a></p>
+        <p>
+          ${marker.site?.address} 
+          <a href="${'https://maps.google.com/?q=' + marker.site?.address}" target="_blank">
+            ${t('site.marker.getDirection')}
+            <i class="fa fa-location-arrow" aria-hidden="true"></i>
+          </a>
+        </p>
         <div class="phone-number">
           <i class="fa fa-phone fa-lg phone" aria-hidden="true"></i>
           <a href="${'tel:' + number}">${number}</a>
         </div>
         <br>
         <div>
-          Serves:
-            ${marker.site?.Populations.map((population) => population.name)}
+          ${t('site.marker.serve')}
+          ${marker.site?.Populations.map((population) => population.name)}
         </div>
         <br>
         <br>
-        <a class="button" href="${'/sites/' + marker.site?.id}">SEE LOCATION DETAILS</a>
+        <a class="button" href="${'/sites/' + marker.site?.id}">${t('site.marker.seeLocation')}</a>
       <div>
     `);
     infoWindow.open({
@@ -116,7 +119,7 @@ function Site() {
             </div>
           </div>
           <div className="map">
-            <Map apiKey={window.env.REACT_APP_GOOGLE_MAPS_API_KEY} id="map" center={{ lat: 37.7749, lng: -122.4194 }} zoom={14}>
+            <Map apiKey={window.env.REACT_APP_GOOGLE_MAPS_API_KEY} id="map" center={{ lat: data.lat, lng: data.lng }} zoom={14}>
               <Marker key={`marker-${data.id}`} site={data} onClick={onMarkerClick} position={{ lat: data.lat, lng: data.lng }} />
             </Map>
           </div>
@@ -128,7 +131,7 @@ function Site() {
                   <div className="address-container-address">{data.address}</div>
 
                   <a href={'https://maps.google.com/?q=' + data.address} target="_blank" rel="noreferrer">
-                    GET DIRECTIONS
+                    {t('site.getDirection')}
                   </a>
                   <br></br>
                   <br></br>
@@ -136,10 +139,10 @@ function Site() {
               </div>
             )}
             <div className="contact-info col-md-4">
-              <div className="title"> Contact Information</div>
+              <div className="title"> {t('site.contactInfo')}</div>
               {data.website && (
                 <div>
-                  Website:{' '}
+                  {t('site.website')}
                   <a className="link" href={data.website} target="_blank" rel="noreferrer">
                     <i className="fa fa-link fa-lg"></i> link
                   </a>
@@ -147,7 +150,7 @@ function Site() {
               )}
               {data.phoneNumber && (
                 <div>
-                  Main number:{' '}
+                  {t('site.mainNumber')}
                   <a className="link" href={'tel:' + data.phoneNumber}>
                     {styleNumber(data.phoneNumber)}
                   </a>
@@ -155,7 +158,7 @@ function Site() {
               )}
               {data.email && (
                 <div>
-                  Email:{' '}
+                  {t('site.email')}
                   <a className="link" href={'mailto:' + data.email}>
                     {data.email}
                   </a>
@@ -163,7 +166,7 @@ function Site() {
               )}
             </div>
             <div className="col-md-4">
-              <div className="title">Hours</div>
+              <div className="title">{t('site.hours')}</div>
               {data.Hours?.map((hours) => (
                 <div className="time-interval">
                   <label>{Info.weekdays('short')[(parseInt(hours.day) + 6) % 7]}</label>
