@@ -35,7 +35,7 @@ function Navigation() {
   return (
     <nav className="navigation header navbar navbar-expand-md navbar-light fixed-top">
       <Link to="/">
-        <img alt="logo" className="logo" src={`${process.env.PUBLIC_URL}/sfhsa-logo.png`} />
+        <img alt="logo" className="logo" src={`${process.env.PUBLIC_URL}/SfReadyMeals.png`} />
       </Link>
       <div className="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul className="navbar-nav flex-grow-1 mb-2 mb-md-0">
@@ -51,6 +51,11 @@ function Navigation() {
             <li className="nav-item active">
               <Link className="nav-link" aria-current="page" to="/">
                 {t('navigation.tab.home')}
+              </Link>
+            </li>
+            <li className="nav-item active">
+              <Link className="nav-link" aria-current="page" to="/about">
+                ABOUT
               </Link>
             </li>
             <li className="nav-item active">
