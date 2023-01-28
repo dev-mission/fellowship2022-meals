@@ -1,0 +1,130 @@
+#!/usr/bin/env node
+
+/* eslint-disable no-console, no-await-in-loop */
+const fetch = require('node-fetch');
+const fs = require('fs-extra');
+const path = require('path');
+const XLSX = require('xlsx');
+const models = require('../models');
+
+const { Op } = models.Sequelize;
+
+if (process.argv.length < 3) {
+  console.log('Usage: bin/import filename.xlsx');
+  process.exit(1);
+}
+
+function downloadWorkbook(url) {
+  return new Promise((resolve, reject) => {
+    fs.mkdirpSync(path.resolve(__dirname, '../tmp'));
+    const filename = path.resolve(__dirname, '../tmp/file.xlsx');
+    const file = fs.createWriteStream(filename);
+    fetch(url)
+      .then((response) => {
+        response.body.on('end', () => {
+          resolve(filename);
+        });
+        response.body.pipe(file);
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+async function importWorkbook() {
+  // download the file, if url
+  let filename = process.argv[2];
+  if (filename.startsWith('http')) {
+    console.log('Downloading workbook...');
+    filename = await downloadWorkbook(filename);
+  }
+
+  // start processing the first sheet in the workbook
+  const workbook = XLSX.readFile(filename);
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet);
+  for (const row of rows) {
+    console.log(row);
+    // find or create nutrition partner
+    let name = row['Nutrition Partner'].trim();
+    let phoneNumber = row['Contact Phone No.']
+      .trim()
+      .replace(/[^\d]+/g, '')
+      .substring(0, 10);
+    const [nutritionPartner] = await models.NutritionPartner.findOrCreate({
+      where: {
+        name: {
+          [Op.iLike]: name,
+        },
+      },
+      defaults: { name, phoneNumber },
+    });
+    await nutritionPartner.update({ phoneNumber });
+    // find or create site
+    name = row['Meal Site'].trim();
+    let names = name.split(/-|\r\n|:/).map((n) => n.trim());
+    let serviceName;
+    if (names.length > 1) {
+      // check for and remove Service type
+      const services = ['BREAKFAST', 'LUNCH', 'DINNER'];
+      names = names
+        .map((n) => {
+          if (services.includes(n)) {
+            serviceName = n;
+            return null;
+          }
+          return n;
+        })
+        .filter(Boolean);
+      name = names.join('\n');
+    }
+    phoneNumber = row['Meal Site Phone #']
+      .trim()
+      .replace(/[^\d]+/g, '')
+      .substring(0, 10);
+    // TODO capture phone number extensions
+    const address = `${row.Address.trim().replace('\r\n', ', ')}, San Francisco, CA ${row['Zip Code']}`;
+    const [site] = await models.Site.findOrCreate({
+      where: {
+        name: {
+          [Op.iLike]: name,
+        },
+      },
+      defaults: { name, phoneNumber, address },
+    });
+    await site.update({ phoneNumber, address });
+    // find or create nutrition partner/site association
+    await models.SiteNutritionPartner.findOrCreate({
+      where: {
+        SiteId: site.id,
+        NutritionPartnerId: nutritionPartner.id,
+      },
+    });
+    // find or create service and associate
+    name = serviceName;
+    if (name) {
+      const [service] = await models.Service.findOrCreate({
+        where: {
+          name: {
+            [Op.iLike]: name,
+          },
+        },
+        defaults: { name },
+      });
+      await models.SiteService.findOrCreate({
+        where: {
+          SiteId: site.id,
+          ServiceId: service.id,
+        },
+      });
+    }
+  }
+}
+
+importWorkbook()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.log(error);
+    process.exit(1);
+  });
