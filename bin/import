@@ -184,6 +184,22 @@ async function importWorkbook() {
         },
       });
     }
+    // extract status info
+    name = row.Status.replace(/\([^)]*\)/, '').trim();
+    const [status] = await models.CovidStatus.findOrCreate({
+      where: {
+        name: {
+          [Op.iLike]: name,
+        },
+      },
+      defaults: { name },
+    });
+    await models.SiteCovidStatus.findOrCreate({
+      where: {
+        SiteId: site.id,
+        CovidStatusId: status.id,
+      },
+    });
   }
 }
 
