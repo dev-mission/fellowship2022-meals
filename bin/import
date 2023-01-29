@@ -3,6 +3,7 @@
 /* eslint-disable no-console, no-await-in-loop */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
+const inflection = require('inflection');
 const path = require('path');
 const XLSX = require('xlsx');
 const models = require('../models');
@@ -108,7 +109,7 @@ async function importWorkbook() {
             [Op.iLike]: name,
           },
         },
-        defaults: { name },
+        defaults: { name: inflection.capitalize(name) },
       });
       await models.SiteService.findOrCreate({
         where: {
@@ -135,6 +136,51 @@ async function importWorkbook() {
         where: {
           SiteId: site.id,
           PopulationId: population.id,
+        },
+      });
+    }
+    // find or create meal types and associate
+    let mealTypes = row['Cuisine type'];
+    // fix some known typos in source
+    mealTypes = mealTypes.replace('beakfast', 'breakfast');
+    // extract additional service types from this field
+    const servicesRE = /breakfast|lunch|dinner/gi;
+    const services = [...mealTypes.matchAll(servicesRE)];
+    // remove the types
+    mealTypes = mealTypes.replace(servicesRE, '');
+    // remove other known extra text
+    mealTypes = mealTypes.replace(/meals|meal option|variety|\(|\)|and/gi, '');
+    // split into tokens
+    mealTypes = mealTypes.split(/,|\r\n/).map((mt) => mt.trim());
+    for (name of mealTypes) {
+      const [mealType] = await models.MealType.findOrCreate({
+        where: {
+          name: {
+            [Op.iLike]: name,
+          },
+        },
+        defaults: { name },
+      });
+      await models.SiteMealType.findOrCreate({
+        where: {
+          SiteId: site.id,
+          MealTypeId: mealType.id,
+        },
+      });
+    }
+    for (const match of services) {
+      const [service] = await models.Service.findOrCreate({
+        where: {
+          name: {
+            [Op.iLike]: match[0],
+          },
+        },
+        defaults: { name: inflection.capitalize(match[0]) },
+      });
+      await models.SiteService.findOrCreate({
+        where: {
+          SiteId: site.id,
+          ServiceId: service.id,
         },
       });
     }
