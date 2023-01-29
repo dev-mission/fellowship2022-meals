@@ -200,6 +200,63 @@ async function importWorkbook() {
         CovidStatusId: status.id,
       },
     });
+    // extract and store hours, begin by deleting all current hours
+    await Promise.all((await site.getHours()).map((h) => h.destroy()));
+    const days = row['Days Open\r\n(Consumer advised to verify)']?.split(';').map((d) => d.trim());
+    const hours = row['Meal Hours\r\n(Consumer advised to verify)']?.split(';').map((h) => h.trim());
+    console.log(days, hours);
+    if (!days || !hours) {
+      continue;
+    }
+    const mapping = {
+      Sunday: 0,
+      Monday: 1,
+      Mon: 1,
+      Tuesday: 2,
+      Wednesday: 3,
+      Thursday: 4,
+      Friday: 5,
+      Fri: 5,
+      Saturday: 6,
+    };
+    for (const [i, day] of days.entries()) {
+      // extract all the days as integer values
+      const daySplit = day.split('\r\n').map((d) => d.trim());
+      const dayValues = [];
+      for (const dayString of daySplit) {
+        // check for a range
+        let range = dayString.split('-').map((d) => d.trim());
+        if (range.length === 2) {
+          let d;
+          for (d = mapping[range[0]]; d !== mapping[range[1]]; d = (d + 1) % 7) {
+            dayValues.push(d);
+          }
+          dayValues.push(d);
+        } else {
+          // check for individual days
+          dayValues.push(...dayString.split(',').map((d) => mapping[d.trim()]));
+        }
+      }
+      // extract corresponding open/close times
+      console.log(i, day, dayValues);
+      const hourSplit = hours[i].split('\r\n').map((h) => h.trim());
+      for (const hourString of hourSplit) {
+        let range = hourString.split('-').map((h) => h.trim());
+        if (range.length === 2) {
+          // create these hours for all the days
+          await Promise.all(
+            dayValues.map((d) =>
+              models.Hours.create({
+                SiteId: site.id,
+                day: d,
+                open: range[0],
+                close: range[1],
+              })
+            )
+          );
+        }
+      }
+    }
   }
 }
 
