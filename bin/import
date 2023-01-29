@@ -83,7 +83,7 @@ async function importWorkbook() {
       .replace(/[^\d]+/g, '')
       .substring(0, 10);
     // TODO capture phone number extensions
-    const address = `${row.Address.trim().replace('\r\n', ', ')}, San Francisco, CA ${row['Zip Code']}`;
+    const address = `${row.Address.trim().replace('\r\n', '\n')}\nSan Francisco, CA ${row['Zip Code']}`;
     const [site] = await models.Site.findOrCreate({
       where: {
         name: {
