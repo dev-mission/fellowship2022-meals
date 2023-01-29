@@ -117,6 +117,27 @@ async function importWorkbook() {
         },
       });
     }
+    // find or create populations and associate
+    const populations = row['Population(s) Served']
+      .replace('only', '')
+      .split('and')
+      .map((p) => p.trim());
+    for (name of populations) {
+      const [population] = await models.Population.findOrCreate({
+        where: {
+          name: {
+            [Op.iLike]: name,
+          },
+        },
+        defaults: { name },
+      });
+      await models.SitePopulation.findOrCreate({
+        where: {
+          SiteId: site.id,
+          PopulationId: population.id,
+        },
+      });
+    }
   }
 }
 
