@@ -20,6 +20,8 @@
       "contactPage": "Visit the contact page to directly call the location you'd like to reach."
     },
     "about": {
+      "title": "About SF Ready Meals",
+      "description": "This congregate program serves nutritious meals at community dining centers across the city. Note: Due to COVID, many dining centers may provide take-out meals only, or as an option with limited communal dining. This website is a collaboration of SFHSA, Dev/Mission and Code for San Francisco",
       "sfhsa": {
         "title": "San Francisco Human Services Agency",
         "description": "San Francisco Human Services Agency supports individuals, families, and communities with food, health care, financial, employment, child care, and protective services."
