@@ -7,7 +7,7 @@
     letter-spacing: 0.004em;
     display: block;
     text-align: center;
-    margin: 0 auto;
+    margin: 0 auto 30px;
   }
 
   .heading::before {
@@ -119,6 +119,7 @@
     .filter-options {
       display: flex;
       align-items: center;
+      
 
       .filter-text {
         font-weight: bold;
