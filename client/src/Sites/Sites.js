@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../AuthContext';
-import { DateTime, Info } from 'luxon';
+import { useTranslation } from 'react-i18next';
 
 import Api from '../Api';
 import { Map, Marker } from '../Components/Map';
@@ -19,7 +19,6 @@ function Sites() {
   const [mealtypes, setMealTypes] = useState(null);
   const [services, setServices] = useState(null);
   const [statuses, setStatuses] = useState(null);
-
   const [filters, setFilters] = useState({
     populationId: null,
     nutritionPartnerId: null,
@@ -27,6 +26,7 @@ function Sites() {
     serviceId: null,
     statusId: null,
   });
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch(`/api/sites`)
@@ -37,7 +37,6 @@ function Sites() {
         return response.json();
       })
       .then((data) => {
-        // console.log(data);
         setData(data);
         setError(null);
       })
@@ -101,22 +100,27 @@ function Sites() {
 
     infoWindow.close();
     infoWindow.setContent(`
-      <div class="marker">
-        <a class="marker-header" href="${'/sites/' + marker.site?.id}">${marker.site?.name}</a>
-        <p>${marker.site?.address} <a href="${
-      'https://maps.google.com/?q=' + marker.site?.address
-    }" target="_blank">Get Directions <i class="fa fa-location-arrow" aria-hidden="true"></i></a></p>
-        <div class="phone-number">
-          <i class="fa fa-phone fa-lg phone" aria-hidden="true"></i>
-          <a href="${'tel:' + number}">${number}</a>
-        </div>
-        <br>
-        <div>
-          Serves:
-            ${marker.site?.Populations.map((population) => population.name)}
-        </div>
-        <a class="button" href="${'/sites/' + marker.site?.id}">SEE LOCATION DETAILS</a>
+    <div class="marker">
+      <a class="marker-header" href="${'/sites/' + marker.site?.id}">${marker.site?.name}</a>
+      <p>
+        ${marker.site?.address} 
+        <a href="${'https://maps.google.com/?q=' + marker.site?.address}" target="_blank">
+          ${t('site.marker.getDirection')}
+          <i class="fa fa-location-arrow" aria-hidden="true"></i>
+        </a>
+      </p>
+      <div class="phone-number">
+        <i class="fa fa-phone fa-lg phone" aria-hidden="true"></i>
+        <a href="${'tel:' + number}">${number}</a>
+      </div>
+      <br>
       <div>
+        ${t('site.marker.serve')}
+        ${marker.site?.Populations.map((population) => population.name)}
+      </div>
+      <br>
+      <a class="button" href="${'/sites/' + marker.site?.id}">${t('site.marker.seeLocation')}</a>
+    <div>
     `);
     infoWindow.open({
       anchor: marker,
@@ -168,7 +172,7 @@ function Sites() {
   return (
     <div className="sites">
       <div className="line"></div>
-      <div className="heading">Locations</div>
+      <div className="heading">{t('sites.title')}</div>
       {user?.isAdmin && (
         <Link style={{ textDecoration: 'none' }} to="/sites/new">
           <div className="add-site">
@@ -179,7 +183,7 @@ function Sites() {
       )}
       <div className="filter">
         <div className="filter-options">
-          <div className="filter-text">Filter</div>
+          <div className="filter-text">{t('sites.filter.title')}</div>
           <div className="filter-button">
             <button
               class="btn filter-button dropdown-toggle"
@@ -190,7 +194,7 @@ function Sites() {
               aria-expanded="false"
               style={filters.nutritionPartnerId && { border: '1px solid #037493' }}>
               {(filters.nutritionPartnerId && partners?.map((partner) => filters.nutritionPartnerId === partner.id && partner.name)) ||
-                'Nutrition Partner'}
+                t('sites.filter.nutritionPartner')}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {partners?.map((partner) => (
@@ -211,7 +215,7 @@ function Sites() {
               aria-expanded="false"
               style={filters.populationId && { border: '1px solid #037493' }}>
               {(filters.populationId && populations?.map((population) => filters.populationId === population.id && population.name)) ||
-                'Population'}
+                t('sites.filter.population')}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {populations?.map((population) => (
@@ -231,7 +235,8 @@ function Sites() {
               aria-haspopup="true"
               aria-expanded="false"
               style={filters.mealTypeId && { border: '1px solid #037493' }}>
-              {(filters.mealTypeId && mealtypes?.map((mealtype) => filters.mealTypeId === mealtype.id && mealtype.name)) || 'Meal Type'}
+              {(filters.mealTypeId && mealtypes?.map((mealtype) => filters.mealTypeId === mealtype.id && mealtype.name)) ||
+                t('sites.filter.mealType')}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {mealtypes?.map((mealtype) => (
@@ -251,7 +256,8 @@ function Sites() {
               aria-haspopup="true"
               aria-expanded="false"
               style={filters.serviceId && { border: '1px solid #037493' }}>
-              {(filters.serviceId && services?.map((service) => filters.serviceId === service.id && service.name)) || 'Service'}
+              {(filters.serviceId && services?.map((service) => filters.serviceId === service.id && service.name)) ||
+                t('sites.filter.service')}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {services?.map((service) => (
@@ -271,7 +277,7 @@ function Sites() {
               aria-haspopup="true"
               aria-expanded="false"
               style={filters.statusId && { border: '1px solid #037493' }}>
-              {(filters.statusId && statuses?.map((status) => filters.statusId === status.id && status.name)) || 'Status'}
+              {(filters.statusId && statuses?.map((status) => filters.statusId === status.id && status.name)) || t('sites.filter.status')}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {statuses?.map((status) => (
@@ -284,17 +290,11 @@ function Sites() {
           </div>
 
           <button onClick={resetFilter} className="reset-button">
-            Reset
+            {t('sites.filter.reset')}
           </button>
         </div>
       </div>
       <div className="sites-list">
-        {/* {filteredData &&
-          filteredData.map((site) => (
-            <div>
-              <SiteItem data={site} />
-            </div>
-          ))} */}
         <div className="row">
           <div className="col-md-4">
             {filteredData &&
