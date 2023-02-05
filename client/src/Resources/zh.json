@@ -1,0 +1,64 @@
+{
+  "translation": {
+    "home": {
+      "title": "顺丰即食",
+      "description": "SFHSA 的集体膳食计划每天在全市的许多社区餐饮场所为 60 岁的老年人和残障成人提供营养丰富的低成本膳食。"
+    },
+    "navigation": {
+      "tab": {
+        "home": "家",
+        "locations": "地点",
+        "logOut": "登出",
+        "logIn": "登录"
+      }
+    },
+    "footer": {
+      "title": "联系我们",
+      "generalInfo": "一般信息： ",
+      "call": "称呼",
+      "fasterAssistance": "如需更快的计划协助： ",
+      "contactPage": "访问联系页面，直接致电您想要到达的地点。"
+    },
+    "about": {
+      "title": "关于顺丰即食",
+      "description": "这个集体计划在全市的社区餐饮中心提供营养餐。",
+      "sfhsa": {
+        "title": "旧金山人类服务局",
+        "description": "San Francisco Human Services Agency 为个人、家庭和社区提供食品、医疗保健、金融、就业、儿童保育和保护服务。"
+      },
+      "devMission": {
+        "title": "开发/任务",
+        "description": "Dev/Mission 通过高等教育 STEM 职业和科技行业的工作，以及让 K-12 接触 STEAM 活动，将 260 多名低收入年轻人与科技职业联系起来。 "
+      },
+      "c4sf": {
+        "title": "旧金山代码",
+        "description": "旧金山守则是美国旅网络守则的一部分。"
+      }
+    },
+    "sites": {
+      "title": "地点",
+      "filter": {
+        "title": "筛选",
+        "nutritionPartner": "营养伙伴",
+        "population": "人口",
+        "mealType": "膳食类型",
+        "service": "服务",
+        "status": "地位",
+        "reset": "重置"
+      }
+    },
+    "site": {
+      "marker": {
+        "getDirection": "获取路线",
+        "serve": "供应： ",
+        "seeLocation": "查看位置详情"
+      },
+      "getDirection": "获取路线",
+      "contactInfo": "联系方式",
+      "hours": "小时",
+      "website": "网站： ",
+      "mainNumber": "主号码： ",
+      "email": "电子邮件： "
+    }
+  }
+}
