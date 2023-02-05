@@ -1,0 +1,270 @@
+#!/usr/bin/env node
+
+/* eslint-disable no-console, no-await-in-loop */
+const fetch = require('node-fetch');
+const fs = require('fs-extra');
+const inflection = require('inflection');
+const path = require('path');
+const XLSX = require('xlsx');
+const models = require('../models');
+
+const { Op } = models.Sequelize;
+
+if (process.argv.length < 3) {
+  console.log('Usage: bin/import filename.xlsx');
+  process.exit(1);
+}
+
+function downloadWorkbook(url) {
+  return new Promise((resolve, reject) => {
+    fs.mkdirpSync(path.resolve(__dirname, '../tmp'));
+    const filename = path.resolve(__dirname, '../tmp/file.xlsx');
+    const file = fs.createWriteStream(filename);
+    fetch(url)
+      .then((response) => {
+        response.body.on('end', () => {
+          resolve(filename);
+        });
+        response.body.pipe(file);
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+async function importWorkbook() {
+  // download the file, if url
+  let filename = process.argv[2];
+  if (filename.startsWith('http')) {
+    console.log('Downloading workbook...');
+    filename = await downloadWorkbook(filename);
+  }
+
+  // start processing the first sheet in the workbook
+  const workbook = XLSX.readFile(filename);
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet);
+  for (const row of rows) {
+    console.log(row);
+    // find or create nutrition partner
+    let name = row['Nutrition Partner'].trim();
+    let phoneNumber = row['Contact Phone No.']
+      .trim()
+      .replace(/[^\d]+/g, '')
+      .substring(0, 10);
+    const [nutritionPartner] = await models.NutritionPartner.findOrCreate({
+      where: {
+        name: {
+          [Op.iLike]: name,
+        },
+      },
+      defaults: { name, phoneNumber },
+    });
+    await nutritionPartner.update({ phoneNumber });
+    // find or create site
+    name = row['Meal Site'].trim();
+    let names = name.split(/-|\r\n|:/).map((n) => n.trim());
+    let serviceName;
+    if (names.length > 1) {
+      // check for and remove Service type
+      const services = ['BREAKFAST', 'LUNCH', 'DINNER'];
+      names = names
+        .map((n) => {
+          if (services.includes(n)) {
+            serviceName = n;
+            return null;
+          }
+          return n;
+        })
+        .filter(Boolean);
+      name = names.join('\n');
+    }
+    phoneNumber = row['Meal Site Phone #']
+      .trim()
+      .replace(/[^\d]+/g, '')
+      .substring(0, 10);
+    // TODO capture phone number extensions
+    const address = `${row.Address.trim().replace('\r\n', '\n')}\nSan Francisco, CA ${row['Zip Code']}`;
+    const [site] = await models.Site.findOrCreate({
+      where: {
+        name: {
+          [Op.iLike]: name,
+        },
+      },
+      defaults: { name, phoneNumber, address },
+    });
+    await site.update({ phoneNumber, address });
+    // find or create nutrition partner/site association
+    await models.SiteNutritionPartner.findOrCreate({
+      where: {
+        SiteId: site.id,
+        NutritionPartnerId: nutritionPartner.id,
+      },
+    });
+    // find or create service and associate
+    name = serviceName;
+    if (name) {
+      const [service] = await models.Service.findOrCreate({
+        where: {
+          name: {
+            [Op.iLike]: name,
+          },
+        },
+        defaults: { name: inflection.capitalize(name) },
+      });
+      await models.SiteService.findOrCreate({
+        where: {
+          SiteId: site.id,
+          ServiceId: service.id,
+        },
+      });
+    }
+    // find or create populations and associate
+    const populations = row['Population(s) Served']
+      .replace('only', '')
+      .split('and')
+      .map((p) => p.trim());
+    for (name of populations) {
+      const [population] = await models.Population.findOrCreate({
+        where: {
+          name: {
+            [Op.iLike]: name,
+          },
+        },
+        defaults: { name },
+      });
+      await models.SitePopulation.findOrCreate({
+        where: {
+          SiteId: site.id,
+          PopulationId: population.id,
+        },
+      });
+    }
+    // find or create meal types and associate
+    let mealTypes = row['Cuisine type'];
+    // fix some known typos in source
+    mealTypes = mealTypes.replace('beakfast', 'breakfast');
+    // extract additional service types from this field
+    const servicesRE = /breakfast|lunch|dinner/gi;
+    const services = [...mealTypes.matchAll(servicesRE)];
+    // remove the types
+    mealTypes = mealTypes.replace(servicesRE, '');
+    // remove other known extra text
+    mealTypes = mealTypes.replace(/meals|meal option|variety|\(|\)|and/gi, '');
+    // split into tokens
+    mealTypes = mealTypes.split(/,|\r\n/).map((mt) => mt.trim());
+    for (name of mealTypes) {
+      const [mealType] = await models.MealType.findOrCreate({
+        where: {
+          name: {
+            [Op.iLike]: name,
+          },
+        },
+        defaults: { name },
+      });
+      await models.SiteMealType.findOrCreate({
+        where: {
+          SiteId: site.id,
+          MealTypeId: mealType.id,
+        },
+      });
+    }
+    for (const match of services) {
+      const [service] = await models.Service.findOrCreate({
+        where: {
+          name: {
+            [Op.iLike]: match[0],
+          },
+        },
+        defaults: { name: inflection.capitalize(match[0]) },
+      });
+      await models.SiteService.findOrCreate({
+        where: {
+          SiteId: site.id,
+          ServiceId: service.id,
+        },
+      });
+    }
+    // extract status info
+    name = row.Status.replace(/\([^)]*\)/, '').trim();
+    const [status] = await models.CovidStatus.findOrCreate({
+      where: {
+        name: {
+          [Op.iLike]: name,
+        },
+      },
+      defaults: { name },
+    });
+    await models.SiteCovidStatus.findOrCreate({
+      where: {
+        SiteId: site.id,
+        CovidStatusId: status.id,
+      },
+    });
+    // extract and store hours, begin by deleting all current hours
+    await Promise.all((await site.getHours()).map((h) => h.destroy()));
+    const days = row['Days Open\r\n(Consumer advised to verify)']?.split(';').map((d) => d.trim());
+    const hours = row['Meal Hours\r\n(Consumer advised to verify)']?.split(';').map((h) => h.trim());
+    console.log(days, hours);
+    if (!days || !hours) {
+      continue;
+    }
+    const mapping = {
+      Sunday: 0,
+      Monday: 1,
+      Mon: 1,
+      Tuesday: 2,
+      Wednesday: 3,
+      Thursday: 4,
+      Friday: 5,
+      Fri: 5,
+      Saturday: 6,
+    };
+    for (const [i, day] of days.entries()) {
+      // extract all the days as integer values
+      const daySplit = day.split('\r\n').map((d) => d.trim());
+      const dayValues = [];
+      for (const dayString of daySplit) {
+        // check for a range
+        let range = dayString.split('-').map((d) => d.trim());
+        if (range.length === 2) {
+          let d;
+          for (d = mapping[range[0]]; d !== mapping[range[1]]; d = (d + 1) % 7) {
+            dayValues.push(d);
+          }
+          dayValues.push(d);
+        } else {
+          // check for individual days
+          dayValues.push(...dayString.split(',').map((d) => mapping[d.trim()]));
+        }
+      }
+      // extract corresponding open/close times
+      console.log(i, day, dayValues);
+      const hourSplit = hours[i].split('\r\n').map((h) => h.trim());
+      for (const hourString of hourSplit) {
+        let range = hourString.split('-').map((h) => h.trim());
+        if (range.length === 2) {
+          // create these hours for all the days
+          await Promise.all(
+            dayValues.map((d) =>
+              models.Hours.create({
+                SiteId: site.id,
+                day: d,
+                open: range[0],
+                close: range[1],
+              })
+            )
+          );
+        }
+      }
+    }
+  }
+}
+
+importWorkbook()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.log(error);
+    process.exit(1);
+  });
