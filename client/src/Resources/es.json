@@ -1,0 +1,64 @@
+{
+  "translation": {
+    "home": {
+      "title": "Comidas preparadas de SF",
+      "description": "El Programa de Comidas Congregadas de SFHSA ofrece comidas nutritivas y de bajo costo para personas mayores de 60 años y adultos con discapacidades todos los días en muchos comedores comunitarios en toda la ciudad. "
+    },
+    "navigation": {
+      "tab": {
+        "home": "HOGAR",
+        "locations": "UBICACIONES",
+        "logOut": "CERRAR SESIÓN",
+        "logIn": "ACCESO"
+      }
+    },
+    "footer": {
+      "title": "Contáctenos",
+      "generalInfo": "Información general: ",
+      "call": "Llamar",
+      "fasterAssistance": "Para asistencia más rápida del programa: ",
+      "contactPage": "Visite la página de contacto para llamar directamente a la ubicación a la que le gustaría llegar."
+    },
+    "about": {
+      "title": "Acerca de las comidas preparadas de SF",
+      "description": "Este programa colectivo sirve comidas nutritivas en los comedores comunitarios de toda la ciudad. ",
+      "sfhsa": {
+        "title": "Agencia de Servicios Humanos de San Francisco",
+        "description": "La Agencia de Servicios Humanos de San Francisco apoya a individuos, familias y comunidades con servicios de alimentación, atención médica, finanzas, empleo, cuidado infantil y protección."
+      },
+      "devMission": {
+        "title": "Desarrollo/Misión",
+        "description": "Dev/Mission ha estado conectando a más de 260 adultos jóvenes de bajos ingresos con carreras en tecnología a través de carreras STEM postsecundarias y trabajos en la industria tecnológica, además de exponer K-12 a actividades STEAM. "
+      },
+      "c4sf": {
+        "title": "Código de San Francisco",
+        "description": "Code for San Francisco es parte de Code for America Brigade Network. "
+      }
+    },
+    "sites": {
+      "title": "Ubicaciones",
+      "filter": {
+        "title": "Filtrar",
+        "nutritionPartner": "Socio de Nutrición",
+        "population": "Población",
+        "mealType": "Tipo de comida",
+        "service": "Servicio",
+        "status": "Estado",
+        "reset": "Reiniciar"
+      }
+    },
+    "site": {
+      "marker": {
+        "getDirection": "Obtener las direcciones",
+        "serve": "Sirve: ",
+        "seeLocation": "VER DETALLES DE UBICACIÓN"
+      },
+      "getDirection": "OBTENER LAS DIRECCIONES",
+      "contactInfo": "Información de contacto",
+      "hours": "Horas",
+      "website": "Sitio web: ",
+      "mainNumber": "Número principal: ",
+      "email": "Correo electrónico: "
+    }
+  }
+}

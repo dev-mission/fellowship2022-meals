@@ -2,12 +2,14 @@ import './SiteItem.scss';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../AuthContext';
+import { useTranslation } from 'react-i18next';
 
 import Api from '../Api';
 
 function SiteItem({ data }) {
   const { user, setUser } = useAuthContext();
-  const { id, name, address, phoneNumber, email, Populations } = data;
+  const { id, name, address, phoneNumber, Populations } = data;
+  const { t } = useTranslation();
 
   useEffect(
     function () {
@@ -43,7 +45,7 @@ function SiteItem({ data }) {
           </div>
         )}
         <div className="population">
-          Serves:{' '}
+          {t('site.marker.serve')}
           {Populations.map((population) => (
             <span>
               {population.name}

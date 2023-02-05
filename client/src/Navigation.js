@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import './Header.scss';
 import Api from './Api';
@@ -9,6 +10,7 @@ import './Navigation.scss';
 function Navigation() {
   const navigate = useNavigate();
   const { user, setUser } = useAuthContext();
+  const { t } = useTranslation();
 
   useEffect(
     function () {
@@ -48,7 +50,7 @@ function Navigation() {
           <div className="flex-grow-1 d-flex justify-content-end">
             <li className="nav-item active">
               <Link className="nav-link" aria-current="page" to="/">
-                HOME
+                {t('navigation.tab.home')}
               </Link>
             </li>
             <li className="nav-item active">
@@ -58,20 +60,20 @@ function Navigation() {
             </li>
             <li className="nav-item active">
               <Link className="nav-link" aria-current="page" to="/sites">
-                LOCATIONS
+                {t('navigation.tab.locations')}
               </Link>
             </li>
             {user && (
               <li className="nav-item">
                 <a className="nav-link" href="/logout" onClick={onLogout}>
-                  LOG OUT
+                  {t('navigation.tab.logOut')}
                 </a>
               </li>
             )}
             {!user && (
               <li className="nav-item">
                 <Link className="nav-link" to="/login">
-                  LOG IN
+                  {t('navigation.tab.logIn')}
                 </Link>
               </li>
             )}

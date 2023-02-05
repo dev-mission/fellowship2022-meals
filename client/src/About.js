@@ -1,44 +1,39 @@
-import { map } from 'lodash';
 import './About.scss';
 
+import { useTranslation } from 'react-i18next';
 function About() {
+  const { t } = useTranslation();
+
   const orgs = [
     {
-      name: 'San Francisco Human Services Agency',
+      name: t('about.sfhsa.title'),
       website: 'https://www.sfhsa.org/',
       logo: 'sfhsa-logo.png',
-      description:
-        'San Francisco Human Services Agency supports individuals, families, and communities with food, health care, financial, employment, child care, and protective services.',
+      description: t('about.sfhsa.description'),
     },
     {
-      name: 'Dev/Mission',
+      name: t('about.devMission.title'),
       website: 'https://devmission.org/',
       logo: 'devmission.png',
-      description:
-        'Dev/Mission has been connecting more than 260 low-income young adults to careers in Tech through post-secondary STEM careers and jobs in the tech industry as well as exposing K-12 to STEAM Activities. Dev/Mission provides STEM opportunities for untapped 6-24 year-olds San Francisco Bay Area youth. Our goal is to connect underserved populations to careers in technology by teaching programming, hardware, and critical career skills.',
+      description: t('about.devMission.description'),
     },
     {
-      name: 'Code for San Francisco',
+      name: t('about.c4sf.title'),
       website: 'https://www.codeforsanfrancisco.org/',
       logo: 'c4sf.png',
-      description:
-        'Code for San Francisco is part of the Code for America Brigade Network. We are a welcoming and inclusive volunteer group of developers, designers, data geeks, and citizen activists who use creative technology to solve civic and social problems.',
+      description: t('about.c4sf.description'),
     },
   ];
 
   return (
     <main className="about">
-      <h1>About SF Ready Meals</h1>
-      <div className="description">
-        This congregate program serves nutritious meals at community dining centers across the City. Note: Due to COVID, many dining centers
-        may provide take-out meals only, or as an option with limited communal dining. This website is a collaboration of SFHSA, Dev/Mission
-        and Code for San Francisco.
-      </div>
+      <h1>{t('about.title')}</h1>
+      <div className="description"> {t('about.description')} </div>
       <ul>
         {orgs.map((org) => {
           return (
-            <li>
-              <img src={`${process.env.PUBLIC_URL}/${org.logo}`}></img>
+            <li key={org.name}>
+              <img src={`${process.env.PUBLIC_URL}/${org.logo}`} alt={org.logo}></img>
               <div className="text">
                 <a href={org.website} target="_blank" rel="noreferrer">
                   <h3>{org.name}</h3>
