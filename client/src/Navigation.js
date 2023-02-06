@@ -6,6 +6,7 @@ import './Header.scss';
 import Api from './Api';
 import { useAuthContext } from './AuthContext';
 import './Navigation.scss';
+import { doc } from 'prettier';
 
 function Navigation() {
   const navigate = useNavigate();
@@ -32,52 +33,59 @@ function Navigation() {
     navigate('/');
   }
 
+  function onTabClick(event) {
+    const active = document.getElementsByClassName('active');
+    const target = event.target;
+    active[0].classList.remove('active');
+    target.classList.add('active');
+  }
+
   return (
-    <nav className="navigation header navbar navbar-expand-md navbar-light fixed-top">
-      <Link to="/">
+    <nav className="navigation navbar navbar-expand-md navbar-light fixed-top">
+      <Link to="/" className="navbar-brand">
         <img alt="logo" className="logo" src={`${process.env.PUBLIC_URL}/SfReadyMeals.png`} />
       </Link>
-      <div className="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul className="navbar-nav flex-grow-1 mb-2 mb-md-0">
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        Menu
+      </button>
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item active" onClick={onTabClick}>
+            <Link className="nav-link" aria-current="page" to="/">
+              {t('navigation.tab.home')}
+            </Link>
+          </li>
+          <li className="nav-item" onClick={onTabClick}>
+            <Link className="nav-link" aria-current="page" to="/about">
+              ABOUT
+            </Link>
+          </li>
+          <li className="nav-item" onClick={onTabClick}>
+            <Link className="nav-link" aria-current="page" to="/sites">
+              {t('navigation.tab.locations')}
+            </Link>
+          </li>
           {user && (
-            <li className="nav-item me-3">
-              <span className="nav-link d-inline-block">
-                Hello, <Link to="/account">{user.firstName}!</Link>
-              </span>
-              {user.pictureUrl && <div className="header__picture" style={{ backgroundImage: `url(${user.pictureUrl})` }}></div>}
+            <li className="nav-item">
+              <a className="nav-link" href="/logout" onClick={onLogout}>
+                {t('navigation.tab.logOut')}
+              </a>
             </li>
           )}
-          <div className="flex-grow-1 d-flex justify-content-end">
-            <li className="nav-item active">
-              <Link className="nav-link" aria-current="page" to="/">
-                {t('navigation.tab.home')}
+          {!user && (
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
+                {t('navigation.tab.logIn')}
               </Link>
             </li>
-            <li className="nav-item active">
-              <Link className="nav-link" aria-current="page" to="/about">
-                ABOUT
-              </Link>
-            </li>
-            <li className="nav-item active">
-              <Link className="nav-link" aria-current="page" to="/sites">
-                {t('navigation.tab.locations')}
-              </Link>
-            </li>
-            {user && (
-              <li className="nav-item">
-                <a className="nav-link" href="/logout" onClick={onLogout}>
-                  {t('navigation.tab.logOut')}
-                </a>
-              </li>
-            )}
-            {!user && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  {t('navigation.tab.logIn')}
-                </Link>
-              </li>
-            )}
-          </div>
+          )}
         </ul>
       </div>
     </nav>
