@@ -296,7 +296,7 @@ function Sites() {
       </div>
       <div className="sites-list">
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-4 list">
             {filteredData &&
               filteredData.map((site) => (
                 <div>

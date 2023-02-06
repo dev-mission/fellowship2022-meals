@@ -20,6 +20,12 @@
   }
   .sites-list {
     padding: 0.5rem 1rem;
+
+    .list {
+      overflow: scroll;
+      max-height: 400px;
+      margin-bottom: 10px;
+    }
     .marker {
       width: 300px;
       height: max-content;
@@ -119,6 +125,8 @@
     .filter-options {
       display: flex;
       align-items: center;
+      column-gap: 40px;
+      row-gap: 20px;
 
       .filter-text {
         font-weight: bold;
@@ -126,16 +134,11 @@
       }
 
       .filter-button {
-        margin: 0 10px;
-
         button {
           width: inherit;
-          // border: 1px solid black;
         }
 
         .dropdown-menu {
-          // width: 200px;
-
           .dropdown-item {
             width: inherit;
           }
@@ -146,7 +149,6 @@
         width: fit-content;
         height: fit-content;
         padding: 6px 20px;
-        margin: 0 10px;
 
         background: #037493;
         color: #fff;
@@ -158,6 +160,30 @@
       .reset-button:hover {
         background-color: #0f2549;
         cursor: pointer;
+      }
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .filter {
+      margin: 0 20px;
+      padding: 20px 0;
+      .filter-options {
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .filter-text {
+          display: none;
+        }
+        .filter-button {
+          button {
+            border: 1.5px solid grey;
+            width: 160px;
+          }
+        }
+
+        .reset-button {
+          width: 160px;
+        }
       }
     }
   }
