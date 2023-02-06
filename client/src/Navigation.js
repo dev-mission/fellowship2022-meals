@@ -53,7 +53,7 @@ function Navigation() {
         aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation">
-        Menu
+        {t('navigation.menu')}
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ml-auto">
@@ -64,7 +64,7 @@ function Navigation() {
           </li>
           <li className="nav-item" onClick={onTabClick}>
             <Link className="nav-link" aria-current="page" to="/about">
-              ABOUT
+              {t('navigation.tab.about')}
             </Link>
           </li>
           <li className="nav-item" onClick={onTabClick}>
