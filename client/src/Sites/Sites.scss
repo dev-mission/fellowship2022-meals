@@ -23,7 +23,6 @@
 
     .list {
       overflow: scroll;
-      max-height: 400px;
       margin-bottom: 10px;
     }
 
@@ -196,6 +195,22 @@
     .sites-list {
       .home-map {
         flex: none;
+      }
+      .list {
+        height: 400px;
+      }
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    .row {
+      position: relative;
+      justify-content: end;
+      .list {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 66.66%;
       }
     }
   }
