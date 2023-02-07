@@ -26,6 +26,12 @@
       max-height: 400px;
       margin-bottom: 10px;
     }
+
+    .home-map {
+      flex: 0 0 66.66%;
+      width: 100%;
+    }
+
     .marker {
       width: 300px;
       height: max-content;
@@ -183,6 +189,13 @@
         .reset-button {
           width: 160px;
         }
+      }
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .sites-list {
+      .home-map {
+        flex: none;
       }
     }
   }

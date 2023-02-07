@@ -304,7 +304,7 @@ function Sites() {
                 </div>
               ))}
           </div>
-          <div className="col-md-8">
+          <div className="col-md-8 home-map">
             <Map apiKey={window.env.REACT_APP_GOOGLE_MAPS_API_KEY} id="map" center={{ lat: 37.7749, lng: -122.4194 }} zoom={14}>
               {filteredData
                 ?.filter((site) => site.lat && site.lng)

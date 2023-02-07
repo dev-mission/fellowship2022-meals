@@ -125,17 +125,14 @@ function Site() {
           </div>
           <div className="main-content row">
             {data.address && (
-              <div className="address-container col-md-4">
-                <i className="fa fa-map-o fa-lg"></i>
-                <div>
+              <div className="col-md-4">
+                <div className="address-container">
+                  <i className="fa fa-map-o fa-lg"></i>
                   <div className="address-container-address">{data.address}</div>
-
-                  <a href={'https://maps.google.com/?q=' + data.address} target="_blank" rel="noreferrer">
-                    {t('site.getDirection')}
-                  </a>
-                  <br></br>
-                  <br></br>
                 </div>
+                <a href={'https://maps.google.com/?q=' + data.address} target="_blank" rel="noreferrer" className="get-direction">
+                  {t('site.getDirection')}
+                </a>
               </div>
             )}
             <div className="contact-info col-md-4">
