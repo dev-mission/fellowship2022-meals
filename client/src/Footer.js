@@ -8,7 +8,6 @@ function Footer() {
   const [matches, setMatches] = useState(mediaMatch.matches);
 
   useEffect(() => {
-    console.log(matches);
     const handler = (e) => setMatches(e.matches);
     mediaMatch.addEventListener('change', handler);
   });
