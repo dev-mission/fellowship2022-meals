@@ -183,6 +183,9 @@
             border: 1.5px solid grey;
             width: 160px;
           }
+          .dropdown-menu {
+            width: 160px;
+          }
         }
 
         .reset-button {
@@ -195,9 +198,28 @@
     .sites-list {
       .home-map {
         flex: none;
+        display: none;
       }
-      .list {
-        height: 400px;
+    }
+
+    .filter {
+      .filter-options {
+        .filter-button {
+          button {
+            font-size: calc(7px + 1vw);
+            width: 35vw;
+          }
+
+          .dropdown-menu {
+            font-size: calc(7px + 1vw);
+            width: 35vw;
+          }
+        }
+
+        .reset-button {
+          font-size: calc(7px + 1vw);
+          width: 35vw;
+        }
       }
     }
   }
@@ -211,6 +233,15 @@
         bottom: 0;
         left: 0;
         right: 66.66%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    .filter {
+      margin: 0 10px;
+      .filter-options {
+        column-gap: 20px;
       }
     }
   }
