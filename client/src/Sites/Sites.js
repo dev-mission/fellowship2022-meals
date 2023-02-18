@@ -13,7 +13,7 @@ import SiteItem from './SiteItem';
 function Sites() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const { user, setUser } = useAuthContext();
+  const { user } = useAuthContext();
   const [partners, setPartners] = useState(null);
   const [populations, setPopulations] = useState(null);
   const [mealtypes, setMealTypes] = useState(null);
@@ -45,19 +45,6 @@ function Sites() {
         setData(null);
       });
   }, []);
-
-  useEffect(
-    function () {
-      Api.users.me().then((response) => {
-        if (response.status === 204) {
-          setUser(null);
-        } else {
-          setUser(response.data);
-        }
-      });
-    },
-    [setUser]
-  );
 
   useEffect(() => {
     Api.nutritionpartners.getall().then((response) => {
