@@ -61,31 +61,31 @@ function Sites() {
 
   useEffect(() => {
     Api.nutritionpartners.getall().then((response) => {
-      setPartners(response.data);
+      setPartners(sortFilter(response.data));
     });
   }, []);
 
   useEffect(() => {
     Api.populations.getall().then((response) => {
-      setPopulations(response.data);
+      setPopulations(sortFilter(response.data));
     });
   }, []);
 
   useEffect(() => {
     Api.mealtypes.getall().then((response) => {
-      setMealTypes(response.data);
+      setMealTypes(sortFilter(response.data));
     });
   }, []);
 
   useEffect(() => {
     Api.services.getall().then((response) => {
-      setServices(response.data);
+      setServices(sortFilter(response.data));
     });
   }, []);
 
   useEffect(() => {
     Api.statuses.getall().then((response) => {
-      setStatuses(response.data);
+      setStatuses(sortFilter(response.data));
     });
   }, []);
 
@@ -148,6 +148,19 @@ function Sites() {
     });
   }
 
+  function sortFilter(arr) {
+    arr.sort(function (a, b) {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    return arr;
+  }
+
   let filteredData = data;
   if (filters.populationId) {
     filteredData = filteredData.filter((site) => site.Populations.find((p) => p.id === filters.populationId));
@@ -167,6 +180,9 @@ function Sites() {
 
   if (filters.statusId) {
     filteredData = filteredData.filter((site) => site.CovidStatuses.find((s) => s.id === filters.statusId));
+  }
+  if (filteredData) {
+    filteredData = sortFilter(filteredData);
   }
 
   return (
@@ -198,7 +214,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {partners?.map((partner) => (
-                <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item" key={partner.id}>
                   {filters.nutritionPartnerId === partner.id && <span>*</span>}
                   {partner.name}
                 </div>
@@ -219,7 +235,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {populations?.map((population) => (
-                <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item" key={population.id}>
                   {filters.populationId === population.id && <span>*</span>}
                   {population.name}
                 </div>
@@ -240,7 +256,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {mealtypes?.map((mealtype) => (
-                <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item" key={mealtype.id}>
                   {filters.mealTypeId === mealtype.id && <span>*</span>}
                   {mealtype.name}
                 </div>
@@ -261,7 +277,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {services?.map((service) => (
-                <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item" key={service.id}>
                   {filters.serviceId === service.id && <span>*</span>}
                   {service.name}
                 </div>
@@ -281,7 +297,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {statuses?.map((status) => (
-                <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item" key={status.id}>
                   {filters.statusId === status.id && <span>*</span>}
                   {status.name}
                 </div>
@@ -299,7 +315,7 @@ function Sites() {
           <div className="col-md-4">
             {filteredData &&
               filteredData.map((site) => (
-                <div>
+                <div key={site.id}>
                   <SiteItem data={site} />
                 </div>
               ))}
