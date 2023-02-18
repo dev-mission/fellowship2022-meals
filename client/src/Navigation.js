@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import './Header.scss';
 import Api from './Api';
+import i18n from './i18n';
 import { useAuthContext } from './AuthContext';
 import './Navigation.scss';
 
@@ -32,6 +33,10 @@ function Navigation() {
     navigate('/');
   }
 
+  async function onChangeLanguage(language) {
+    await i18n.changeLanguage(language);
+  }
+
   return (
     <nav className="navigation header navbar navbar-expand-md navbar-light fixed-top">
       <Link to="/">
@@ -47,36 +52,51 @@ function Navigation() {
               {user.pictureUrl && <div className="header__picture" style={{ backgroundImage: `url(${user.pictureUrl})` }}></div>}
             </li>
           )}
+          <li className="nav-item active">
+            <Link className="nav-link" aria-current="page" to="/">
+              {t('navigation.tab.home')}
+            </Link>
+          </li>
+          <li className="nav-item active">
+            <Link className="nav-link" aria-current="page" to="/about">
+              {t('navigation.tab.about')}
+            </Link>
+          </li>
+          <li className="nav-item active">
+            <Link className="nav-link" aria-current="page" to="/sites">
+              {t('navigation.tab.locations')}
+            </Link>
+          </li>
+          {user && (
+            <li className="nav-item">
+              <a className="nav-link" href="/logout" onClick={onLogout}>
+                {t('navigation.tab.logOut')}
+              </a>
+            </li>
+          )}
+          {!user && (
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
+                {t('navigation.tab.logIn')}
+              </Link>
+            </li>
+          )}
           <div className="flex-grow-1 d-flex justify-content-end">
-            <li className="nav-item active">
-              <Link className="nav-link" aria-current="page" to="/">
-                {t('navigation.tab.home')}
-              </Link>
+            <li className="nav-item">
+              <span className="navbar-text">
+                <button onClick={() => onChangeLanguage('en')} className="btn btn-link navigation__btn">
+                  English
+                </button>{' '}
+                |
+                <button onClick={() => onChangeLanguage('es')} className="btn btn-link navigation__btn">
+                  Español
+                </button>{' '}
+                |
+                <button onClick={() => onChangeLanguage('zh')} className="btn btn-link navigation__btn">
+                  中文
+                </button>
+              </span>
             </li>
-            <li className="nav-item active">
-              <Link className="nav-link" aria-current="page" to="/about">
-                ABOUT
-              </Link>
-            </li>
-            <li className="nav-item active">
-              <Link className="nav-link" aria-current="page" to="/sites">
-                {t('navigation.tab.locations')}
-              </Link>
-            </li>
-            {user && (
-              <li className="nav-item">
-                <a className="nav-link" href="/logout" onClick={onLogout}>
-                  {t('navigation.tab.logOut')}
-                </a>
-              </li>
-            )}
-            {!user && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  {t('navigation.tab.logIn')}
-                </Link>
-              </li>
-            )}
           </div>
         </ul>
       </div>

@@ -7,6 +7,7 @@
     "navigation": {
       "tab": {
         "home": "家",
+        "about": "關於",
         "locations": "地点",
         "logOut": "登出",
         "logIn": "登录"
