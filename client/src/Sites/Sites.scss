@@ -140,11 +140,15 @@
       .filter-button {
         button {
           width: inherit;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
 
         .dropdown-menu {
           .dropdown-item {
             width: inherit;
+            white-space: normal;
           }
         }
       }
