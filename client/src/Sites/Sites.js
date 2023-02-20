@@ -61,31 +61,31 @@ function Sites() {
 
   useEffect(() => {
     Api.nutritionpartners.getall().then((response) => {
-      setPartners(sortFilter(response.data));
+      setPartners(response.data);
     });
   }, []);
 
   useEffect(() => {
     Api.populations.getall().then((response) => {
-      setPopulations(sortFilter(response.data));
+      setPopulations(response.data);
     });
   }, []);
 
   useEffect(() => {
     Api.mealtypes.getall().then((response) => {
-      setMealTypes(sortFilter(response.data));
+      setMealTypes(response.data);
     });
   }, []);
 
   useEffect(() => {
     Api.services.getall().then((response) => {
-      setServices(sortFilter(response.data));
+      setServices(response.data);
     });
   }, []);
 
   useEffect(() => {
     Api.statuses.getall().then((response) => {
-      setStatuses(sortFilter(response.data));
+      setStatuses(response.data);
     });
   }, []);
 
@@ -148,19 +148,6 @@ function Sites() {
     });
   }
 
-  function sortFilter(arr) {
-    arr.sort(function (a, b) {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    });
-    return arr;
-  }
-
   let filteredData = data;
   if (filters.populationId) {
     filteredData = filteredData.filter((site) => site.Populations.find((p) => p.id === filters.populationId));
@@ -180,9 +167,6 @@ function Sites() {
 
   if (filters.statusId) {
     filteredData = filteredData.filter((site) => site.CovidStatuses.find((s) => s.id === filters.statusId));
-  }
-  if (filteredData) {
-    filteredData = sortFilter(filteredData);
   }
 
   return (

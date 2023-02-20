@@ -9,7 +9,9 @@ const helpers = require('../helpers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const allCovidStatuses = await models.CovidStatus.findAll();
+  const allCovidStatuses = await models.CovidStatus.findAll({
+    order: [['name', 'ASC']],
+  });
   res.json(allCovidStatuses.map((r) => r.toJSON()));
 });
 
