@@ -5,8 +5,10 @@
       "description": "SFHSA 的集体膳食计划每天在全市的许多社区餐饮场所为 60 岁的老年人和残障成人提供营养丰富的低成本膳食。"
     },
     "navigation": {
+      "menu": "選集",
       "tab": {
         "home": "家",
+        "about": "關於",
         "locations": "地点",
         "logOut": "登出",
         "logIn": "登录"
