@@ -2,11 +2,9 @@ import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import './Header.scss';
 import Api from './Api';
 import { useAuthContext } from './AuthContext';
 import './Navigation.scss';
-import { doc } from 'prettier';
 
 function Navigation() {
   const navigate = useNavigate();
@@ -81,7 +79,7 @@ function Navigation() {
           )}
           {!user && (
             <li className="nav-item">
-              <Link className="nav-link" to="/login">
+              <Link className="nav-link" to="/login" onClick={onTabClick}>
                 {t('navigation.tab.logIn')}
               </Link>
             </li>

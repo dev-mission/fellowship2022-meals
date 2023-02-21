@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.scss';
 
 import { AuthContextProvider, AuthProtected } from './AuthContext';
-import Header from './Header';
 import Navigation from './Navigation';
 import Home from './Home';
 import Login from './Login';

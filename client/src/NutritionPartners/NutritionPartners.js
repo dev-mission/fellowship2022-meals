@@ -7,7 +7,7 @@ import Api from '../Api';
 function NutritionPartners() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const { user, setUser } = useAuthContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     fetch(`/api/nutritionpartners`)
@@ -27,19 +27,6 @@ function NutritionPartners() {
         setData(null);
       });
   }, []);
-
-  useEffect(
-    function () {
-      Api.users.me().then((response) => {
-        if (response.status === 204) {
-          setUser(null);
-        } else {
-          setUser(response.data);
-        }
-      });
-    },
-    [setUser]
-  );
 }
 
 export default NutritionPartners;
