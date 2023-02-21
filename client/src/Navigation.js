@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import './Header.scss';
 import Api from './Api';
 import { useAuthContext } from './AuthContext';
 import './Navigation.scss';
@@ -44,7 +43,7 @@ function Navigation() {
               <span className="nav-link d-inline-block">
                 Hello, <Link to="/account">{user.firstName}!</Link>
               </span>
-              {user.pictureUrl && <div className="header__picture" style={{ backgroundImage: `url(${user.pictureUrl})` }}></div>}
+              {user.pictureUrl && <div className="navigation__picture" style={{ backgroundImage: `url(${user.pictureUrl})` }}></div>}
             </li>
           )}
           <div className="flex-grow-1 d-flex justify-content-end">
