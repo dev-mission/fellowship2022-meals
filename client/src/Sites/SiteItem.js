@@ -34,7 +34,7 @@ function SiteItem({ data }) {
         <div className="population">
           {t('site.marker.serve')}
           {Populations.map((population) => (
-            <span>
+            <span key={population.id}>
               {population.name}
               {Populations[Populations.length - 1] !== population && ' | '}
             </span>

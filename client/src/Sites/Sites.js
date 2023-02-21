@@ -185,7 +185,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {partners?.map((partner) => (
-                <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item" key={partner.id}>
                   {filters.nutritionPartnerId === partner.id && <span>*</span>}
                   {partner.name}
                 </div>
@@ -206,7 +206,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {populations?.map((population) => (
-                <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item" key={population.id}>
                   {filters.populationId === population.id && <span>*</span>}
                   {population.name}
                 </div>
@@ -227,7 +227,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {mealtypes?.map((mealtype) => (
-                <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item" key={mealtype.id}>
                   {filters.mealTypeId === mealtype.id && <span>*</span>}
                   {mealtype.name}
                 </div>
@@ -248,7 +248,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {services?.map((service) => (
-                <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item" key={service.id}>
                   {filters.serviceId === service.id && <span>*</span>}
                   {service.name}
                 </div>
@@ -268,7 +268,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {statuses?.map((status) => (
-                <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item" key={status.id}>
                   {filters.statusId === status.id && <span>*</span>}
                   {status.name}
                 </div>
@@ -322,7 +322,7 @@ function Sites() {
               ))}
             {filteredData &&
               filteredData.map((site) => (
-                <div>
+                <div key={site.id}>
                   <SiteItem data={site} />
                 </div>
               ))}

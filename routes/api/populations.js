@@ -10,7 +10,9 @@ const router = express.Router();
 
 // Get all population
 router.get('/', async (req, res) => {
-  const allPopulation = await models.Population.findAll();
+  const allPopulation = await models.Population.findAll({
+    order: [['name', 'ASC']],
+  });
   res.json(allPopulation.map((r) => r.toJSON()));
 });
 

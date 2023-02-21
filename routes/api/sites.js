@@ -11,6 +11,7 @@ const router = express.Router();
 // Get all sites
 router.get('/', async (req, res) => {
   const allSite = await models.Site.findAll({
+    order: [['name', 'ASC']],
     include: [models.NutritionPartner, models.Population, models.MealType, models.Service, models.CovidStatus, models.Hours],
   });
   res.json(allSite.map((r) => r.toJSON()));
