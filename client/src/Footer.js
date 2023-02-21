@@ -1,14 +1,25 @@
 import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
 
 import './Footer.scss';
 function Footer() {
   const { t } = useTranslation();
+  const mediaMatch = window.matchMedia('(max-width: 768px)');
+  const [matches, setMatches] = useState(mediaMatch.matches);
+
+  useEffect(() => {
+    const handler = (e) => setMatches(e.matches);
+    mediaMatch.addEventListener('change', handler);
+  });
 
   return (
     <div>
       <div
         className="contact"
-        style={{ background: `#f9f9f9 url(${process.env.PUBLIC_URL}/contact-bg.png) no-repeat`, backgroundPosition: 'right' }}>
+        style={{
+          background: matches ? 'none' : `#f9f9f9 url(${process.env.PUBLIC_URL}/contact-bg.png) no-repeat`,
+          backgroundPosition: 'right',
+        }}>
         <div className="heading">{t('footer.title')}</div>
         <div className="information">
           <div className="general-information">

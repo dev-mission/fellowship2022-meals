@@ -5,6 +5,7 @@
       "description": "SFHSA's Congregate Meals Program offers nutritious, low-cost meals to seniors 60+ and adults with disabilities everyday at many community dining sites throughout the city. In response to COVID-19, most sites offer takeout meals."
     },
     "navigation": {
+      "menu": "Menu",
       "tab": {
         "home": "HOME",
         "about": "ABOUT",

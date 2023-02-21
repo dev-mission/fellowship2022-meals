@@ -13,7 +13,7 @@ import SiteItem from './SiteItem';
 function Sites() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const { user, setUser } = useAuthContext();
+  const { user } = useAuthContext();
   const [partners, setPartners] = useState(null);
   const [populations, setPopulations] = useState(null);
   const [mealtypes, setMealTypes] = useState(null);
@@ -45,19 +45,6 @@ function Sites() {
         setData(null);
       });
   }, []);
-
-  useEffect(
-    function () {
-      Api.users.me().then((response) => {
-        if (response.status === 204) {
-          setUser(null);
-        } else {
-          setUser(response.data);
-        }
-      });
-    },
-    [setUser]
-  );
 
   useEffect(() => {
     Api.nutritionpartners.getall().then((response) => {
@@ -198,7 +185,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {partners?.map((partner) => (
-                <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('nutritionPartnerId', partner.id)} class="dropdown-item" key={partner.id}>
                   {filters.nutritionPartnerId === partner.id && <span>*</span>}
                   {partner.name}
                 </div>
@@ -219,7 +206,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {populations?.map((population) => (
-                <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('populationId', population.id)} class="dropdown-item" key={population.id}>
                   {filters.populationId === population.id && <span>*</span>}
                   {population.name}
                 </div>
@@ -240,7 +227,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {mealtypes?.map((mealtype) => (
-                <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('mealTypeId', mealtype.id)} class="dropdown-item" key={mealtype.id}>
                   {filters.mealTypeId === mealtype.id && <span>*</span>}
                   {mealtype.name}
                 </div>
@@ -261,7 +248,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {services?.map((service) => (
-                <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('serviceId', service.id)} class="dropdown-item" key={service.id}>
                   {filters.serviceId === service.id && <span>*</span>}
                   {service.name}
                 </div>
@@ -281,7 +268,7 @@ function Sites() {
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {statuses?.map((status) => (
-                <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item">
+                <div onClick={() => onFilterClick('statusId', status.id)} class="dropdown-item" key={status.id}>
                   {filters.statusId === status.id && <span>*</span>}
                   {status.name}
                 </div>
@@ -296,15 +283,51 @@ function Sites() {
       </div>
       <div className="sites-list">
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-4 list">
             {filteredData &&
               filteredData.map((site) => (
                 <div>
                   <SiteItem data={site} />
                 </div>
               ))}
+            {filteredData &&
+              filteredData.map((site) => (
+                <div>
+                  <SiteItem data={site} />
+                </div>
+              ))}
+            {filteredData &&
+              filteredData.map((site) => (
+                <div>
+                  <SiteItem data={site} />
+                </div>
+              ))}
+            {filteredData &&
+              filteredData.map((site) => (
+                <div>
+                  <SiteItem data={site} />
+                </div>
+              ))}
+            {filteredData &&
+              filteredData.map((site) => (
+                <div>
+                  <SiteItem data={site} />
+                </div>
+              ))}
+            {filteredData &&
+              filteredData.map((site) => (
+                <div>
+                  <SiteItem data={site} />
+                </div>
+              ))}
+            {filteredData &&
+              filteredData.map((site) => (
+                <div key={site.id}>
+                  <SiteItem data={site} />
+                </div>
+              ))}
           </div>
-          <div className="col-md-8">
+          <div className="col-md-8 home-map">
             <Map apiKey={window.env.REACT_APP_GOOGLE_MAPS_API_KEY} id="map" center={{ lat: 37.7749, lng: -122.4194 }} zoom={14}>
               {filteredData
                 ?.filter((site) => site.lat && site.lng)

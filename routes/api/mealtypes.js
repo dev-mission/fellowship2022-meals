@@ -9,7 +9,9 @@ const helpers = require('../helpers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const allMealTypes = await models.MealType.findAll();
+  const allMealTypes = await models.MealType.findAll({
+    order: [['name', 'ASC']],
+  });
   res.json(allMealTypes.map((r) => r.toJSON()));
 });
 

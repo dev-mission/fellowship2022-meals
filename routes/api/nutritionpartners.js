@@ -9,7 +9,9 @@ const helpers = require('../helpers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const allNutritionPartners = await models.NutritionPartner.findAll();
+  const allNutritionPartners = await models.NutritionPartner.findAll({
+    order: [['name', 'ASC']],
+  });
   res.json(allNutritionPartners.map((r) => r.toJSON()));
 });
 
