@@ -5,8 +5,10 @@
       "description": "El Programa de Comidas Congregadas de SFHSA ofrece comidas nutritivas y de bajo costo para personas mayores de 60 años y adultos con discapacidades todos los días en muchos comedores comunitarios en toda la ciudad. "
     },
     "navigation": {
+      "menu": "MENÚ",
       "tab": {
         "home": "HOGAR",
+        "about": "ACERCA DE",
         "locations": "UBICACIONES",
         "logOut": "CERRAR SESIÓN",
         "logIn": "ACCESO"

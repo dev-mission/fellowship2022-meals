@@ -8,7 +8,6 @@ main {
       box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.2);
       padding: 20px 40px;
       margin: 20px;
-      // max-width: 80%;
       width: fit-content;
       min-width: 40%;
 
@@ -38,10 +37,11 @@ main {
   }
 
   .map {
-    margin: 80px;
-    padding: 0 20%;
-    // max-width: 768px;
-    // max-height: 400px;
+    margin: 40px 0;
+    padding: 0 5%;
+    height: 400px;
+    width: 100%;
+
     .marker {
       width: 300px;
       height: max-content;
@@ -107,10 +107,8 @@ main {
   }
 
   .main-content {
-    padding: 0 10% 80px 10%;
-    width: 100%;
-    // display: flex;
-    // justify-content: space-around;
+    margin: 60px;
+    row-gap: 30px;
 
     .address-container {
       display: flex;
@@ -124,24 +122,25 @@ main {
       .address-container-address {
         text-decoration: underline;
       }
+    }
 
-      a {
-        display: block;
-        width: fit-content;
-        height: fit-content;
-        padding: 14px 35px;
-        margin-top: 30px;
+    .get-direction {
+      display: block;
+      width: fit-content;
+      height: fit-content;
+      padding: 14px 35px;
+      margin-top: 30px;
+      margin-left: 50px;
 
-        background: #037493;
-        color: #fff;
-        border-radius: 25px;
-        text-decoration: none;
+      background: #037493;
+      color: #fff;
+      border-radius: 25px;
+      text-decoration: none;
 
-        font-size: 13px;
-      }
-      a:hover {
-        background-color: #0f2549;
-      }
+      font-size: 13px;
+    }
+    .get-direction:hover {
+      background-color: #0f2549;
     }
 
     .contact-info {
@@ -168,6 +167,16 @@ main {
     .time-interval {
       label {
         width: 50px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .main-content {
+      margin: 30px;
+
+      .get-direction {
+        margin: 20px auto 0 auto;
       }
     }
   }

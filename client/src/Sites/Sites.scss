@@ -7,7 +7,7 @@
     letter-spacing: 0.004em;
     display: block;
     text-align: center;
-    margin: 0 auto;
+    margin: 0 auto 30px;
   }
 
   .heading::before {
@@ -20,6 +20,17 @@
   }
   .sites-list {
     padding: 0.5rem 1rem;
+
+    .list {
+      overflow: scroll;
+      margin-bottom: 10px;
+    }
+
+    .home-map {
+      flex: 0 0 66.66%;
+      width: 100%;
+    }
+
     .marker {
       width: 300px;
       height: max-content;
@@ -119,25 +130,25 @@
     .filter-options {
       display: flex;
       align-items: center;
+      column-gap: 40px;
+      row-gap: 20px;
 
       .filter-text {
         font-weight: bold;
-        margin-right: 30px;
       }
 
       .filter-button {
-        margin: 0 10px;
-
         button {
           width: inherit;
-          // border: 1px solid black;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
 
         .dropdown-menu {
-          // width: 200px;
-
           .dropdown-item {
             width: inherit;
+            white-space: normal;
           }
         }
       }
@@ -146,7 +157,6 @@
         width: fit-content;
         height: fit-content;
         padding: 6px 20px;
-        margin: 0 10px;
 
         background: #037493;
         color: #fff;
@@ -158,6 +168,84 @@
       .reset-button:hover {
         background-color: #0f2549;
         cursor: pointer;
+      }
+    }
+  }
+  @media only screen and (max-width: 1080px) {
+    .filter {
+      margin: 0 20px;
+      padding: 20px 0;
+      .filter-options {
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .filter-text {
+          display: none;
+        }
+        .filter-button {
+          button {
+            border: 1.5px solid grey;
+            width: 160px;
+          }
+          .dropdown-menu {
+            width: 160px;
+          }
+        }
+
+        .reset-button {
+          width: 160px;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .sites-list {
+      .home-map {
+        flex: none;
+        display: none;
+      }
+    }
+
+    .filter {
+      .filter-options {
+        .filter-button {
+          button {
+            font-size: calc(7px + 1vw);
+            width: 35vw;
+          }
+
+          .dropdown-menu {
+            font-size: calc(7px + 1vw);
+            width: 35vw;
+          }
+        }
+
+        .reset-button {
+          font-size: calc(7px + 1vw);
+          width: 35vw;
+        }
+      }
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    .row {
+      position: relative;
+      justify-content: end;
+      .list {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 66.66%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    .filter {
+      margin: 0 10px;
+      .filter-options {
+        column-gap: 20px;
       }
     }
   }

@@ -1,28 +1,15 @@
-import './SiteItem.scss';
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthContext } from '../AuthContext';
 import { useTranslation } from 'react-i18next';
 
-import Api from '../Api';
+import { useAuthContext } from '../AuthContext';
+
+import './SiteItem.scss';
 
 function SiteItem({ data }) {
-  const { user, setUser } = useAuthContext();
+  const { user } = useAuthContext();
   const { id, name, address, phoneNumber, Populations } = data;
   const { t } = useTranslation();
 
-  useEffect(
-    function () {
-      Api.users.me().then((response) => {
-        if (response.status === 204) {
-          setUser(null);
-        } else {
-          setUser(response.data);
-        }
-      });
-    },
-    [setUser]
-  );
   let number = '';
 
   if (phoneNumber) {
@@ -49,7 +36,7 @@ function SiteItem({ data }) {
           {Populations.map((population) => (
             <span key={population.id}>
               {population.name}
-              {Populations[Populations.length - 1] != population && ' | '}
+              {Populations[Populations.length - 1] !== population && ' | '}
             </span>
           ))}
         </div>
