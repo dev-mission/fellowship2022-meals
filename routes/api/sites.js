@@ -21,6 +21,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const site = await models.Site.findByPk(req.params.id, {
     include: [models.NutritionPartner, models.Population, models.MealType, models.Service, models.CovidStatus, models.Hours],
+    order: [
+      [models.Hours, 'day', 'ASC'],
+      [models.Hours, 'open', 'ASC'],
+    ],
   });
   if (site) {
     res.json(site.toJSON());

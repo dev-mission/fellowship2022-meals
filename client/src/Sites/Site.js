@@ -10,14 +10,23 @@ import { DateTime, Info } from 'luxon';
 function Site() {
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const [hours, setHours] = useState({});
   const { t } = useTranslation();
 
   useEffect(() => {
     if (id) {
       Api.sites.get(id).then((response) => {
         const { data } = response;
-        console.log(data);
         setData(data);
+        let hourObj = {};
+        data.Hours.forEach((hour) => {
+          if (hourObj[`${hour.day}`]) {
+            hourObj[`${hour.day}`].push({ open: hour.open, close: hour.close });
+          } else {
+            hourObj[`${hour.day}`] = [{ open: hour.open, close: hour.close }];
+          }
+        });
+        setHours(hourObj);
       });
     }
   }, [id]);
@@ -164,13 +173,26 @@ function Site() {
             </div>
             <div className="col-md-4">
               <div className="title">{t('site.hours')}</div>
-              {data.Hours?.map((hours) => (
+              {/* {data.Hours?.map((hours) => (
                 <div className="time-interval">
                   <label>{Info.weekdays('short')[(parseInt(hours.day) + 6) % 7]}</label>
                   <span className="time">
                     {DateTime.fromFormat(hours.open, 'H:mm').toLocaleString(DateTime.TIME_SIMPLE)} -{' '}
                     {DateTime.fromFormat(hours.close, 'H:mm').toLocaleString(DateTime.TIME_SIMPLE)}
                   </span>
+                </div>
+              ))} */}
+              {Object.keys(hours).map((day) => (
+                <div className="time-interval">
+                  <label className="day">{Info.weekdays('short')[(parseInt(day) + 6) % 7]}</label>
+                  <div className="hours">
+                    {hours[`${day}`].map((hour) => (
+                      <div className="hour">
+                        {DateTime.fromFormat(hour.open, 'H:mm').toLocaleString(DateTime.TIME_SIMPLE)} -{' '}
+                        {DateTime.fromFormat(hour.close, 'H:mm').toLocaleString(DateTime.TIME_SIMPLE)}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
