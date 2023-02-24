@@ -9,7 +9,12 @@ const helpers = require('../helpers');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const allHours = await models.Hours.findAll();
+  const allHours = await models.Hours.findAll({
+    order: [
+      ['day', 'ASC'],
+      ['open', 'ASC'],
+    ],
+  });
   res.json(allHours.map((r) => r.toJSON()));
 });
 
